@@ -49,6 +49,7 @@
   - [ ] shutdown sequence
   - [x] highlight app on focus on the taskbar
   - [x] organize default apps on state.json
+  - [ ] seasonal decorations
   - [x] populate the menu popup
   - [x] change mouse cursor to a lower res one
   - [x] auto-open windows with url param
