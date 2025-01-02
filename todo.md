@@ -27,6 +27,7 @@
   - [ ] copy of ms paint [#1](https://github.com/FlavioZanoni/FlavioZanoni.com/issues/1)
   - [ ] calendar
   - [x] This Computer
+  - [ ] rofi clone ?
 
 - filesystem:
   - [x] create bin dir or apps dir to store the apps iNode (today they need to be in root or in another folder to open, they need a place to be registered on the fs)
@@ -53,3 +54,6 @@
   - [x] populate the menu popup
   - [x] change mouse cursor to a lower res one
   - [x] auto-open windows with url param
+  - [ ] find out what to do with mobile users
+  - [ ] threejs animated background
+  - [ ] keybind system (close and fullscreen windows, open term etc...)

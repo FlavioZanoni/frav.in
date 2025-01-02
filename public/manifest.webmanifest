@@ -1,6 +1,8 @@
 {
-  "name": "FZ-OS",
-  "short_name": "FZ-OS",
+  "name": "Flávio Zanoni",
+  "short_name": "Flávio Zanoni",
+  "description": "Flávio Zanoni - Software Developer passionate about embedded systems, electronics, and web development with over 3 years of industry experience.",
+  "categories": ["portfolio", "developer", "software", "technology", "business", "personal"],
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
@@ -11,11 +13,33 @@
       "src": "/favicon/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#8A99B2",
+  "background_color": "#E0E3EAf",
   "display": "standalone",
   "lang": "en-US",
-  "scope": "/"
+  "orientation": "landscape",
+  "scope": "/",
+  "start_url": "/",
 }

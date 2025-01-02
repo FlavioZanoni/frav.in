@@ -5,10 +5,14 @@ import { defineConfig } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), svelte(), mdx()],
+  site: "https://frav.in",
+  integrations: [tailwind(), svelte(), mdx(), sitemap()],
   vite: {
-    plugins: [enhancedImages()]
-  }
+    plugins: [enhancedImages()],
+  },
 });
+
