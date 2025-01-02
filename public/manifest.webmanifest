@@ -36,10 +36,10 @@
     }
   ],
   "theme_color": "#8A99B2",
-  "background_color": "#E0E3EAf",
+  "background_color": "#E0E3EA",
   "display": "standalone",
   "lang": "en-US",
   "orientation": "landscape",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/"
 }
