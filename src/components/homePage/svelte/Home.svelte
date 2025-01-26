@@ -11,9 +11,9 @@
   import { getItemByINode, isFileBlock, mv } from "@lib/utils/fileSystemUtils"
   import { saveCurrentOSStore } from "@lib/utils/storeUtils"
   import { onDestroy, onMount } from "svelte"
-  import ContextMenu from "./contextMenu/ContextMenu.svelte"
-  import HomeAppContext from "./contextMenu/homeAppContext.svelte"
-  import HomeContext from "./contextMenu/homeContext.svelte"
+  import ContextMenu from "@svtComp/contextMenu/ContextMenu.svelte"
+  import HomeAppContext from "@svtComp/contextMenu/homeAppContext.svelte"
+  import HomeContext from "@svtComp/contextMenu/homeContext.svelte"
   import { getASCIIArt } from "@lib/utils/getASCIIArt"
 
   console.log("%c Welcome", "color: green; font-weight: bold; font-size: 20px;")
