@@ -42,13 +42,17 @@ export const getItemByINode = (appId: string): DefaultItem | null => {
   }
 }
 
-export const getItemInDiskByFile = (file: FileBlock): DefaultItem | null => {
-  let item: DefaultItem | null = null
-  osStore.subscribe((state) => {
-    item = state.fileSystem.disk[file.location][file.name]
-  })
+export const saveFileToDisk = (item: DefaultItem) => {
+  console.log("item", item)
+  osStore.update((state) => {
+    if (state.fileSystem.disk.files[item.name]) {
+      state.fileSystem.disk.files[item.name].content = item.content
+      return state
+    }
 
-  return item
+    state.fileSystem.disk.files[item.name] = item
+    return state
+  })
 }
 
 export type GetItemsInArrayByINode = {
