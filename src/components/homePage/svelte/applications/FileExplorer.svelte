@@ -9,7 +9,7 @@
   } from "@lib/store/types"
   import FileTree from "./FileTree.svelte"
   import { openApp } from "@lib/utils/enviromentUtils"
-  import Button from "../Button.svelte"
+  import Button from "@svtComp/Button.svelte"
   type Dir = { name: string; hasChildren: boolean; iNode: string }
 
   export let iNode: string = "1"

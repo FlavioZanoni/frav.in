@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getItemByINode, isFileBlock, mv } from "@lib/utils/fileSystemUtils"
-  import Button from "../Button.svelte"
+  import Button from "@svtComp/Button.svelte"
   import { osStore } from "@lib/store"
   import type { DirectoryBlock, FileBlock } from "@lib/store/types"
 

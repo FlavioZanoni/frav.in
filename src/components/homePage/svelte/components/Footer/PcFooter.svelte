@@ -1,9 +1,9 @@
 <script lang="ts">
   import { osStore } from "@lib/store"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
-  import Button from "./Button.svelte"
-  import ChevronMenu from "./ChevronMenu.svelte"
-  import Menu from "./Menu.svelte"
+  import Button from "@svtComp/Button.svelte"
+  import ChevronMenu from "@svtComp/ChevronMenu.svelte"
+  import Menu from "@svtComp/Menu.svelte"
   import { openApp } from "@lib/utils/enviromentUtils"
 
   let clock = "00:00:00"

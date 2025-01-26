@@ -1,5 +1,5 @@
 <script lang="ts">
-  import pkgjson from "../../../../package.json"
+  import pkgjson from "../../../../../package.json"
   import { osStore } from "@lib/store"
   import { openApp } from "@lib/utils/enviromentUtils"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
