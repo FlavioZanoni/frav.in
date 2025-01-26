@@ -55,15 +55,6 @@
           },
           "type": "file",
           "name": "welcome.txt"
-        },
-        {
-          "iNode": "15",
-          "pos": {
-            "x": 5,
-            "y": 5
-          },
-          "type": "file",
-          "name": "test.txt"
         }
       ],
       "size": {
@@ -160,10 +151,6 @@
           {
             "name": "welcome.txt",
             "iNode": "14"
-          },
-          {
-            "name": "test.txt",
-            "iNode": "15"
           }
         ]
       },
@@ -278,15 +265,6 @@
           }
         ]
       },
-      "15": {
-        "type": "file",
-        "blocks": [
-          {
-            "location": "files",
-            "name": "test.txt"
-          }
-        ]
-      }
     },
     "disk": {
       "apps": {
@@ -343,12 +321,6 @@
           "name": "welcome.txt",
           "type": "file",
           "link": "/welcome"
-        },
-        "test.txt": {
-          "icon": "document.png",
-          "name": "test.txt",
-          "type": "file",
-          "content": "asdfasdf"
         }
       }
     }
