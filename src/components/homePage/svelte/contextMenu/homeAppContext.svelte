@@ -10,7 +10,7 @@
     let iNodes = $osStore.fileSystem.iNodes
     if (iNodes[iNode].type !== "directory") {
       let item = getItemByINode(iNode)
-      mv(`./${item.name}`, `../recycleBin`, "root/desktop")
+      mv(`./${item.name}`, `../../recycleBin`, "root/home")
       return
     }
 
@@ -18,7 +18,7 @@
       (item: FileBlock | DirectoryBlock) => {
         if (isFileBlock(item)) return
         if (item.iNode === iNode) {
-          mv(`./${item.name}`, `../recycleBin`, "root/desktop")
+          mv(`./${item.name}`, `../../recycleBin`, "root/home")
         }
       }
     )
