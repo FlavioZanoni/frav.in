@@ -4,6 +4,7 @@
   import FileExplorer from "../../applications/FileExplorer.svelte"
   import ThisComputer from "../../applications/ThisComputer.svelte"
   import { RECYCLE_BIN_INODE } from "@lib/store"
+  import TextEditor from "../applications/TextEditor.svelte"
 
   export let appName: string
   export let iNode: string
@@ -36,8 +37,5 @@
 {:else if appName in appComponents}
   <svelte:component this={appComponents[appName]} {uuid} />
 {:else}
-  <div>
-    <h1>{appName}</h1>
-    <p>Content goes here</p>
-  </div>
+  <TextEditor {iNode} {uuid} />
 {/if}
