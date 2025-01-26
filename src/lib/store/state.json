@@ -55,6 +55,15 @@
           },
           "type": "file",
           "name": "welcome.txt"
+        },
+        {
+          "iNode": "15",
+          "pos": {
+            "x": 5,
+            "y": 5
+          },
+          "type": "file",
+          "name": "test.txt"
         }
       ],
       "size": {
@@ -151,6 +160,10 @@
           {
             "name": "welcome.txt",
             "iNode": "14"
+          },
+          {
+            "name": "test.txt",
+            "iNode": "15"
           }
         ]
       },
@@ -193,7 +206,7 @@
         "type": "directory",
         "blocks": []
       },
-      "7":{
+      "7": {
         "type": "app",
         "blocks": [
           {
@@ -264,6 +277,15 @@
             "name": "welcome.txt"
           }
         ]
+      },
+      "15": {
+        "type": "file",
+        "blocks": [
+          {
+            "location": "files",
+            "name": "test.txt"
+          }
+        ]
       }
     },
     "disk": {
@@ -321,6 +343,12 @@
           "name": "welcome.txt",
           "type": "file",
           "link": "/welcome"
+        },
+        "test.txt": {
+          "icon": "document.png",
+          "name": "test.txt",
+          "type": "file",
+          "content": "asdfasdf"
         }
       }
     }
