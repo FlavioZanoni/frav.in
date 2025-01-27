@@ -9,6 +9,8 @@
   } from "@lib/utils/enviromentUtils"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
   import WindowContent from "./WindowContent.svelte"
+  import { onMount } from "svelte"
+  import { isMobile } from "@lib/utils/browserUtils"
 
   export let iNode: string
   export let uuid: string
@@ -35,6 +37,7 @@
   let minHeight = 300
   const defaultX = window.innerWidth / 2 - defaultWidth / 2
   const defaultY = window.innerHeight / 2 - defaultHeight / 2
+  console.log(window)
 
   let previousWidth = defaultWidth
   let previousHeight = defaultHeight
@@ -55,7 +58,12 @@
   let startResizeX: number, startResizeY: number
 
   $: {
-    if (isMaximized) {
+    if (isMobile()) {
+      x = 0
+      y = 0
+      width = window.outerWidth
+      height = window.outerHeight - 55
+    } else if (isMaximized) {
       x = 0
       y = 0
       width = window.innerWidth
@@ -170,6 +178,30 @@
     window.removeEventListener("mousemove", handleMousemoveResize)
     window.removeEventListener("mouseup", handleMouseupResize)
   }
+
+  onMount(() => {
+    if (isMobile()) {
+      defaultWidth = window.outerWidth
+      defaultHeight = window.outerHeight - 55
+    }
+  })
+
+  let startXSwipe: number = 0
+  let startYSwipe: number = 0
+
+  function handleTouchStart(event: TouchEvent) {
+    startX = event.touches[0].clientX
+    startY = event.touches[0].clientY
+  }
+
+  function handleTouchEnd(event: TouchEvent) {
+    const deltaX = event.changedTouches[0].clientX - startXSwipe
+    const deltaY = event.changedTouches[0].clientY - startYSwipe
+
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      minimizeApp(uuid, { x, y }, { width, height })
+    }
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -191,20 +223,22 @@
     <div
       role="toolbar"
       tabindex="0"
-      class="w-full h-5 flex justify-between items-center bg-slate-400 gap-4"
+      class="w-full h-10 md:h-5 flex justify-between items-center bg-slate-400 gap-4"
       on:mousedown={handleMousedown}
     >
-      <div class="flex gap-1 items-center px-1">
+      <div class="flex gap-2 md:gap-1 items-center px-1">
         <img
           src={`icons/${!isDirectory(item) ? item.icon : "directory.png"}`}
           alt={item.name}
-          class="w-4 h-4 border border-slate-500 p-[1px]"
+          class="w-6 md:w-4 border border-slate-500 p-[1px]"
         />
-        <h1 class="select-none">
+        <h1 class="select-none text-xl md:text-lg">
           {isDirectory(item) ? "File explorer" : item.name}
         </h1>
       </div>
-      <div class="flex gap-2 items-center px-1 select-none">
+      <div
+        class="flex gap-4 md:gap-2 text-2xl md:text-lg items-center px-1 select-none"
+      >
         <button
           on:click={() => {
             minimizeApp(uuid, { x, y }, { width, height })
@@ -212,28 +246,30 @@
         >
           -
         </button>
-        <button
-          on:click={() => {
-            if (!isMaximized) {
-              previousWidth = width
-              previousHeight = height
-              previousX = x
-              previousY = y
-            } // when minimizing, need the previous size and position to return to that state
+        {#if !isMobile()}
+          <button
+            on:click={() => {
+              if (!isMaximized) {
+                previousWidth = width
+                previousHeight = height
+                previousX = x
+                previousY = y
+              } // when minimizing, need the previous size and position to return to that state
 
-            maximizeApp(
-              uuid,
-              { x: previousX || x, y: previousY || y },
-              {
-                width: previousWidth || width,
-                height: previousHeight || height,
-              }
-            )
-          }}
-          class={!isMaximized ? "mb-1" : "mb-[1px]"}
-        >
-          {isMaximized ? "▫" : "□"}
-        </button>
+              maximizeApp(
+                uuid,
+                { x: previousX || x, y: previousY || y },
+                {
+                  width: previousWidth || width,
+                  height: previousHeight || height,
+                }
+              )
+            }}
+            class={!isMaximized ? "mb-1" : "mb-[1px]"}
+          >
+            {isMaximized ? "▫" : "□"}
+          </button>
+        {/if}
         <button
           on:click={() => {
             closeApp(uuid)
@@ -255,48 +291,54 @@
       />
     </div>
 
-    <div class="w-full h-5 flex justify-end bg-slate-400">
-      <div
-        role="toolbar"
-        tabindex="0"
-        class="w-10 h-full flex justify-end items-end cursor-resize text-gray-500"
-        on:mousedown={handleMousedownResize}
-        on:mouseup={handleMouseupResize}
-      >
-        <svg
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          width="16"
-          height="16"
-          viewBox="0 0 256 256"
-          enable-background="new 0 0 256 256"
+    <div
+      class="w-full h-10 md:h-5 flex justify-end bg-slate-400"
+      on:touchstart={handleTouchStart}
+      on:touchend={handleTouchEnd}
+    >
+      {#if !isMobile()}
+        <div
+          role="toolbar"
+          tabindex="0"
+          class="w-10 h-full flex justify-end items-end cursor-resize text-gray-500"
+          on:mousedown={handleMousedownResize}
+          on:mouseup={handleMouseupResize}
         >
-          <g
-            ><g
-              ><path
-                fill="#6b7280"
-                d="M195.2,127.5c0,14,11.4,25.4,25.4,25.4s25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4S195.2,113.5,195.2,127.5z"
-              /><path
-                fill="#6b7280"
-                d="M195.2,210c0,14,11.4,25.4,25.4,25.4S246,224.1,246,210l0,0c0-14-11.4-25.4-25.4-25.4S195.2,196,195.2,210z"
-              /><path
-                fill="#6b7280"
-                d="M104.2,210c0,14,11.4,25.4,25.4,25.4c14,0,25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4C115.5,184.6,104.2,196,104.2,210L104.2,210z"
-              /><path
-                fill="#6b7280"
-                d="M104.2,127.5c0,14,11.4,25.4,25.4,25.4c14,0,25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4C115.5,102.1,104.2,113.5,104.2,127.5L104.2,127.5z"
-              /><path
-                fill="#6b7280"
-                d="M195.2,46c0,14,11.4,25.4,25.4,25.4S246,60,246,46s-11.4-25.4-25.4-25.4S195.2,32,195.2,46z"
-              /><path
-                fill="#6b7280"
-                d="M10,210c0,14,11.4,25.4,25.4,25.4s25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4S10,196,10,210L10,210z"
-              /></g
-            ></g
+          <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="16"
+            height="16"
+            viewBox="0 0 256 256"
+            enable-background="new 0 0 256 256"
           >
-        </svg>
-      </div>
+            <g
+              ><g
+                ><path
+                  fill="#6b7280"
+                  d="M195.2,127.5c0,14,11.4,25.4,25.4,25.4s25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4S195.2,113.5,195.2,127.5z"
+                /><path
+                  fill="#6b7280"
+                  d="M195.2,210c0,14,11.4,25.4,25.4,25.4S246,224.1,246,210l0,0c0-14-11.4-25.4-25.4-25.4S195.2,196,195.2,210z"
+                /><path
+                  fill="#6b7280"
+                  d="M104.2,210c0,14,11.4,25.4,25.4,25.4c14,0,25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4C115.5,184.6,104.2,196,104.2,210L104.2,210z"
+                /><path
+                  fill="#6b7280"
+                  d="M104.2,127.5c0,14,11.4,25.4,25.4,25.4c14,0,25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4C115.5,102.1,104.2,113.5,104.2,127.5L104.2,127.5z"
+                /><path
+                  fill="#6b7280"
+                  d="M195.2,46c0,14,11.4,25.4,25.4,25.4S246,60,246,46s-11.4-25.4-25.4-25.4S195.2,32,195.2,46z"
+                /><path
+                  fill="#6b7280"
+                  d="M10,210c0,14,11.4,25.4,25.4,25.4s25.4-11.4,25.4-25.4c0-14-11.4-25.4-25.4-25.4S10,196,10,210L10,210z"
+                /></g
+              ></g
+            >
+          </svg>
+        </div>
+      {/if}
     </div>
   </div>
 </section>

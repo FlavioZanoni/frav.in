@@ -111,7 +111,6 @@
             alt={item.name}
             class="w-5 h-5"
           />
-
           <span>{item.name}</span></Button
         >
       {/each}
@@ -126,7 +125,6 @@
       id="chevronButon"
       customCss="pt-2">^</Button
     >
-
     <div class="flex justify-center items-center min-w-[91px]">
       <p id="clock">{clock}</p>
     </div>

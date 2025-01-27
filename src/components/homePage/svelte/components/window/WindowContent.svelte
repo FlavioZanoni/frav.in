@@ -3,8 +3,8 @@
   import XTerm from "../../applications/XTerm.svelte"
   import FileExplorer from "../../applications/FileExplorer.svelte"
   import ThisComputer from "../../applications/ThisComputer.svelte"
+  import TextEditor from "../../applications/TextEditor.svelte"
   import { RECYCLE_BIN_INODE } from "@lib/store"
-  import TextEditor from "../applications/TextEditor.svelte"
 
   export let appName: string
   export let iNode: string
