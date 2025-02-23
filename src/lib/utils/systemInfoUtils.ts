@@ -23,7 +23,7 @@ export const getSystemInfo = async (): Promise<SystemInfo> => {
     language: navigator.language,
     platform: navigator.platform,
     //@ts-expect-error 
-    battery: await navigator.getBattery()
+    battery: await navigator?.getBattery?.() || ""
   }
   return info
 }
