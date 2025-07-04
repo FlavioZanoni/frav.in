@@ -40,7 +40,7 @@
         {#each $osStore.enviroment.menu.items as item (item.iNode)}
           {@const currentItem = getItemByINode(item.iNode)}
           <button
-            class="flex flex-col items-center justify-center gap-2 bg-slate-300 dark:bg-slate-700 p-2 rounded hover:bg-slate-400 dark:hover:bg-slate-600 transition"
+            class="flex flex-col items-center justify-center gap-2 bg-slate-300 dark:bg-slate-700 p-4 rounded hover:bg-slate-400 dark:hover:bg-slate-600 transition"
             on:click={() => {
               openApp(item.iNode)
             }}

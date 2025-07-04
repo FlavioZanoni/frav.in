@@ -38,7 +38,7 @@
   $: cellWidth = window.innerWidth / gridColumns
   $: cellHeight =
     (window.innerHeight -
-      (taskbarRect?.height || 40) -
+      (taskbarRect?.height || isMobile() ? 55 : 40) -
       (topBarRect?.height || 0)) /
     gridRows
 
@@ -326,9 +326,12 @@
             draggable="false"
             src={`/icons/${isFile ? currentItem.icon : "directory.png"}`}
             alt={cell.name}
-            style={isMobile()
-              ? `width: ${cellWidth / 1.8}`
-              : `width: ${cellWidth / 1.5}px;`}
+            style:width={isMobile()
+              ? `${cellWidth / 2.3}px`
+              : `${cellWidth / 1.5}px`}
+            style:height={isMobile()
+              ? `${cellWidth / 2.3}px`
+              : `${cellWidth / 1.5}px`}
           />
           <p
             draggable="false"

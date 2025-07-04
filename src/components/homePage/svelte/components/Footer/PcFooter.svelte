@@ -89,7 +89,7 @@
     {/if}
 
     {#if $osStore.enviroment.openApps}
-      {#each $osStore.enviroment.openApps as item (item.iNode)}
+      {#each $osStore.enviroment.openApps as item}
         {@const currentItem = getItemByINode(item.iNode)}
         <Button
           id={item.uuid}

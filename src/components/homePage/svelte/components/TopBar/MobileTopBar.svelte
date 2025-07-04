@@ -6,6 +6,7 @@
   let clock = "00:00:00"
   let sysInfo: SystemInfo
 
+  let info = getConnectionInfo()
   const updateClock = () => {
     const now = new Date()
     const hours = String(now.getHours()).padStart(2, "0")
@@ -13,10 +14,14 @@
     const seconds = String(now.getSeconds()).padStart(2, "0")
     clock = `${hours}:${minutes}:${seconds}`
   }
-  updateClock()
-  setInterval(updateClock, 1000)
+  const updateInfo = () => {
+    info = getConnectionInfo()
+  }
 
-  let info = getConnectionInfo()
+  setInterval(() => {
+    updateClock()
+    updateInfo()
+  }, 1000)
 
   onMount(async () => {
     sysInfo = await getSystemInfo()
