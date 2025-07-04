@@ -40,7 +40,7 @@ const { title } = Astro.props
         "@type": "Person",
         "name": "Flávio Zanoni",
         "url": "https://frav.in",
-        "image": "https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/favicon/android-chrome-192x192.png",
+        "image": "https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png",
         "description": "OS-like portfolio showcasing projects, skills, and resume.",
         "sameAs": [
           "https://github.com/FlavioZanoni",
@@ -55,13 +55,17 @@ const { title } = Astro.props
     </script>
 
     <!-- OG -->
+    <meta
+      property="og:logo"
+      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
+    />
     <meta property="og:site_name" content="Flávio Zanoni - Portfolio" />
     <meta property="og:title" content="Flávio Zanoni - Portfolio" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://frav.in" />
     <meta
       property="og:image"
-      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/favicon/android-chrome-192x192.png"
+      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
     />
     <meta property="og:image:alt" content="Site logo - CRT monitor" />
     <meta
@@ -80,7 +84,7 @@ const { title } = Astro.props
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:image"
-      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/favicon/android-chrome-192x192.png"
+      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
     />
     <meta name="twitter:image:alt" content="Site logo - CRT monitor" />
   </head>
