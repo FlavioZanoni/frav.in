@@ -32,6 +32,9 @@ const skills = [
       <a href="/resume" target="_blank" class=" text-[#2aadad]">Hard to read inside the OS ? click here to view in another browser tab</a>
     `
   }
+  document.querySelectorAll('a').forEach(link => {
+    link.setAttribute('target', '_blank');
+  });
 </script>
 
 <Layout title="Resume">

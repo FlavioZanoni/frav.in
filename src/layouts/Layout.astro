@@ -32,6 +32,61 @@ const { title } = Astro.props
       data-domain="frav.in"
       src="https://plausible-analytics.yoshuu.com/js/script.file-downloads.outbound-links.js"
     ></script>
+
+    <!-- schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Flávio Zanoni",
+        "url": "https://frav.in",
+        "image": "https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png",
+        "description": "OS-like portfolio showcasing projects, skills, and resume.",
+        "sameAs": [
+          "https://github.com/FlavioZanoni",
+          "https://www.linkedin.com/in/flaviozanoni/"
+        ],
+        "jobTitle": "Frontend Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Folhastech"
+        }
+      }
+    </script>
+
+    <!-- OG -->
+    <meta
+      property="og:logo"
+      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
+    />
+    <meta property="og:site_name" content="Flávio Zanoni - Portfolio" />
+    <meta property="og:title" content="Flávio Zanoni - Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://frav.in" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
+    />
+    <meta property="og:image:alt" content="Site logo - CRT monitor" />
+    <meta
+      property="og:description"
+      content="OS like portfolio, showing my projects and resume"
+    />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_BR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:title" content="Flávio Zanoni - Portfolio" />
+    <meta
+      name="twitter:description"
+      content="OS like portfolio, showing my projects and resume"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
+    />
+    <meta name="twitter:image:alt" content="Site logo - CRT monitor" />
   </head>
   <body class="flex flex-col font-mono max-w-screen-xl mx-auto">
     <slot />
