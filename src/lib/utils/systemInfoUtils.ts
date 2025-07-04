@@ -82,7 +82,7 @@ export type ConnectionInfo = {
   downlink: number
 }
 export const getConnectionInfo = (): ConnectionInfo => {
-  const connection = navigator.connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+  const connection = (navigator as any)?.connection || (navigator as any)?.mozConnection || (navigator as any)?.webkitConnection;
   if (!connection) {
     return {
       type: "N/A",
