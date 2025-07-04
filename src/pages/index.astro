@@ -5,6 +5,7 @@ import WindowManager from "@svtComp/window/WindowManager.svelte"
 import "@xterm/xterm/css/xterm.css"
 import Layout from "../layouts/RetroLayout.astro"
 import Boot from "@components/boot/Boot.astro"
+import TopBar from "@components/homePage/svelte/components/TopBar/TopBar.svelte"
 ---
 
 <script>
@@ -30,6 +31,7 @@ import Boot from "@components/boot/Boot.astro"
   {import.meta.env.PROD && <Boot />}
   <div id="home-content" class="crt">
     <div id="scan" class="scan-lines">
+      <TopBar client:only="svelte" />
       <main id="main">
         <Home client:only="svelte" />
       </main>

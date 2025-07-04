@@ -8,7 +8,7 @@ export type SystemInfo = {
   browser: string
   language: string
   platform: string
-  //@ts-expect-error 
+  //@ts-expect-error
   battery: BatteryManager
 }
 export const getSystemInfo = async (): Promise<SystemInfo> => {
@@ -16,13 +16,13 @@ export const getSystemInfo = async (): Promise<SystemInfo> => {
     os: "FZ-OS",
     osVersion: pkgJson.version,
     // the type definition is not up to date
-    //@ts-expect-error 
+    //@ts-expect-error
     memory: navigator.deviceMemory,
     cores: navigator.hardwareConcurrency,
     browser: navigator.userAgent,
     language: navigator.language,
     platform: navigator.platform,
-    //@ts-expect-error 
+    //@ts-expect-error
     battery: await navigator?.getBattery?.() || ""
   }
   return info
@@ -74,4 +74,28 @@ export const getMediaDevicesInfo = async (): Promise<MediaDevicesInfo> => {
   const devices = await navigator.mediaDevices.enumerateDevices()
 
   return { devices }
+}
+
+export type ConnectionInfo = {
+  type: string
+  effectiveType: string
+  downlink: number
+}
+export const getConnectionInfo = (): ConnectionInfo => {
+  const connection = navigator.connection || (navigator as any).mozConnection || (navigator as any).webkitConnection;
+  if (!connection) {
+    return {
+      type: "N/A",
+      effectiveType: "N/A",
+      downlink: 0,
+    }
+  }
+
+  const info = {
+    type: connection.type || "N/A",
+    effectiveType: connection.effectiveType || "N/A",
+    downlink: connection.downlink || 0,
+  }
+
+  return info
 }

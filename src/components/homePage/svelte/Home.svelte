@@ -22,6 +22,7 @@
     "%c   ---- FZ-OS ----",
     "color: green; blue; font-weight: bold; font-style: italic; font-size: 20px;"
   )
+
   let isEmpty = false
   let showContextMenu = false
   let contextMenuX = 0
@@ -30,11 +31,16 @@
   const taskbarRect = document
     .getElementById("taskbar")
     ?.getBoundingClientRect()
+  const topBarRect = document.getElementById("top-bar")?.getBoundingClientRect()
 
   let gridColumns = 16
   let gridRows = 9
   $: cellWidth = window.innerWidth / gridColumns
-  $: cellHeight = (window.innerHeight - (taskbarRect?.height || 40)) / gridRows
+  $: cellHeight =
+    (window.innerHeight -
+      (taskbarRect?.height || 40) -
+      (topBarRect?.height || 0)) /
+    gridRows
 
   // populate grid items
   let gridItems = [] as HomeGridItem[]
@@ -171,12 +177,14 @@
             return state
           }
 
-          iNodes["2"].blocks.forEach((item: FileBlock | DirectoryBlock) => {
-            if (isFileBlock(item)) return
-            if (item.iNode === itemToUpdate.iNode) {
-              mv(`./${item.name}`, `../recycleBin`, "root/home")
+          iNodes[HOME_INODE].blocks.forEach(
+            (item: FileBlock | DirectoryBlock) => {
+              if (isFileBlock(item)) return
+              if (item.iNode === itemToUpdate.iNode) {
+                mv(`./${item.name}`, `../recycleBin`, "root/home")
+              }
             }
-          })
+          )
 
           return state
         }
@@ -318,12 +326,14 @@
             draggable="false"
             src={`/icons/${isFile ? currentItem.icon : "directory.png"}`}
             alt={cell.name}
-            style={`width: ${cellWidth / 1.5}px;`}
+            style={isMobile()
+              ? `width: ${cellWidth / 1.8}`
+              : `width: ${cellWidth / 1.5}px;`}
           />
           <p
             draggable="false"
             style={`width: ${cellWidth - 8}px;`}
-            class="truncate text-xs md:text-sm text-center max-w-[115px]"
+            class="truncate sm:text:md lg:text-xs md:text-sm text-center max-w-[115px]"
           >
             {cell.name || "‎"}
           </p>

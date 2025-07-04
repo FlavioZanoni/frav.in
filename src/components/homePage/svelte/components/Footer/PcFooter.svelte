@@ -3,7 +3,7 @@
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
   import Button from "@svtComp/Button.svelte"
   import ChevronMenu from "@svtComp/ChevronMenu.svelte"
-  import Menu from "@svtComp/Menu.svelte"
+  import Menu from "@svtComp/Menu/Menu.svelte"
   import { openApp } from "@lib/utils/enviromentUtils"
 
   let clock = "00:00:00"
@@ -89,7 +89,7 @@
     {/if}
 
     {#if $osStore.enviroment.openApps}
-      {#each $osStore.enviroment.openApps as item}
+      {#each $osStore.enviroment.openApps as item (item.iNode)}
         {@const currentItem = getItemByINode(item.iNode)}
         <Button
           id={item.uuid}

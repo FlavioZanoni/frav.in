@@ -19,6 +19,11 @@
   export let lastPos: Position | undefined = undefined
   export let lastSize: Size | undefined = undefined
 
+  const taskbarRect = document
+    .getElementById("taskbar")
+    ?.getBoundingClientRect()
+  const topBarRect = document.getElementById("top-bar")?.getBoundingClientRect()
+
   // as the directoryBlock does not contain the info needed, we get it from the "openApps" variable and its type will be "OpenApp"
   // doing this instead of getting both from the oppenApps because oppenApps does not contain the content, icon, and link...
   function isDirectory(item: DefaultItem | OpenApp): item is OpenApp {
@@ -37,7 +42,6 @@
   let minHeight = 300
   const defaultX = window.innerWidth / 2 - defaultWidth / 2
   const defaultY = window.innerHeight / 2 - defaultHeight / 2
-  console.log(window)
 
   let previousWidth = defaultWidth
   let previousHeight = defaultHeight
@@ -60,15 +64,17 @@
   $: {
     if (isMobile()) {
       x = 0
-      y = 0
-      width = window.outerWidth
-      height = window.outerHeight - 55
+      y = 40
+      width = window.innerWidth
+      height =
+        window.innerHeight -
+        (taskbarRect?.height || 55) -
+        (topBarRect?.height || 40)
     } else if (isMaximized) {
       x = 0
       y = 0
       width = window.innerWidth
-      height =
-        window.innerHeight - document.getElementById("taskbar").clientHeight
+      height = window.innerHeight - (taskbarRect?.height || 40)
     } else {
       width = lastSize?.width || defaultWidth
       height = lastSize?.height || defaultHeight
@@ -239,13 +245,15 @@
       <div
         class="flex gap-4 md:gap-2 text-2xl md:text-lg items-center px-1 select-none"
       >
-        <button
-          on:click={() => {
-            minimizeApp(uuid, { x, y }, { width, height })
-          }}
-        >
-          -
-        </button>
+        {#if !isMobile()}
+          <button
+            on:click={() => {
+              minimizeApp(uuid, { x, y }, { width, height })
+            }}
+          >
+            -
+          </button>
+        {/if}
         {#if !isMobile()}
           <button
             on:click={() => {
