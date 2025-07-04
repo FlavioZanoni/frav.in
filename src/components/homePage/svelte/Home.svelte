@@ -7,12 +7,13 @@
     OSStore,
   } from "@lib/store/types"
   import { openApp, openAppByName } from "@lib/utils/enviromentUtils"
+  import { isMobile } from "@lib/utils/browserUtils"
   import { getItemByINode, isFileBlock, mv } from "@lib/utils/fileSystemUtils"
   import { saveCurrentOSStore } from "@lib/utils/storeUtils"
   import { onDestroy, onMount } from "svelte"
-  import ContextMenu from "./contextMenu/ContextMenu.svelte"
-  import HomeAppContext from "./contextMenu/homeAppContext.svelte"
-  import HomeContext from "./contextMenu/homeContext.svelte"
+  import ContextMenu from "@svtComp/contextMenu/ContextMenu.svelte"
+  import HomeAppContext from "@svtComp/contextMenu/homeAppContext.svelte"
+  import HomeContext from "@svtComp/contextMenu/homeContext.svelte"
   import { getASCIIArt } from "@lib/utils/getASCIIArt"
 
   console.log("%c Welcome", "color: green; font-weight: bold; font-size: 20px;")
@@ -21,36 +22,39 @@
     "%c   ---- FZ-OS ----",
     "color: green; blue; font-weight: bold; font-style: italic; font-size: 20px;"
   )
+
   let isEmpty = false
   let showContextMenu = false
   let contextMenuX = 0
   let contextMenuY = 0
-  let contextINode: string | null = null
+  let contextINode: string = null
   const taskbarRect = document
     .getElementById("taskbar")
     ?.getBoundingClientRect()
+  const topBarRect = document.getElementById("top-bar")?.getBoundingClientRect()
 
   let gridColumns = 16
   let gridRows = 9
-  const cellWidth = window.innerWidth / gridColumns
-  const cellHeight =
-    (window.innerHeight - (taskbarRect?.height || 40)) / gridRows
+  $: cellWidth = window.innerWidth / gridColumns
+  $: cellHeight =
+    (window.innerHeight -
+      (taskbarRect?.height || 40) -
+      (topBarRect?.height || 0)) /
+    gridRows
 
   // populate grid items
-  let gridItems: HomeGridItem[] = Array.from(
-    { length: gridColumns * gridRows },
-    (_, i) => {
-      const x = i % gridColumns
-      const y = Math.floor(i / gridColumns)
+  let gridItems = [] as HomeGridItem[]
+  $: gridItems = Array.from({ length: gridColumns * gridRows }, (_, i) => {
+    const x = i % gridColumns
+    const y = Math.floor(i / gridColumns)
 
-      return {
-        iNode: null,
-        pos: { x, y },
-        type: "empty",
-        name: null,
-      }
+    return {
+      iNode: null,
+      pos: { x, y },
+      type: "empty",
+      name: null,
     }
-  )
+  })
 
   let grid = [] as HomeGridItem[]
   $: {
@@ -173,12 +177,14 @@
             return state
           }
 
-          iNodes["2"].blocks.forEach((item: FileBlock | DirectoryBlock) => {
-            if (isFileBlock(item)) return
-            if (item.iNode === itemToUpdate.iNode) {
-              mv(`./${item.name}`, `../recycleBin`, "root/home")
+          iNodes[HOME_INODE].blocks.forEach(
+            (item: FileBlock | DirectoryBlock) => {
+              if (isFileBlock(item)) return
+              if (item.iNode === itemToUpdate.iNode) {
+                mv(`./${item.name}`, `../recycleBin`, "root/home")
+              }
             }
-          })
+          )
 
           return state
         }
@@ -223,6 +229,22 @@
     e.preventDefault()
   }
 
+  $: {
+    if (homeGrid) {
+      const background = $osStore.enviroment.background
+      if (background.base64) {
+        homeGrid.style.backgroundImage = `url(${background.base64})`
+      } else if (background.fileName) {
+        homeGrid.style.backgroundImage = `url(backgrounds/${background.fileName})`
+      } else if (background.color) {
+        homeGrid.style.backgroundColor = background.color
+        homeGrid.style.backgroundImage = null
+      }
+
+      homeGrid.style.backgroundColor = "red"
+    }
+  }
+
   let homeGrid: HTMLElement | null = null
   onMount(() => {
     let store: OSStore | null = null
@@ -240,7 +262,6 @@
     }
 
     let hash = new URL(window.location.href).hash
-
     if (hash) {
       openAppByName(hash.substring(1, hash.length))
     }
@@ -254,21 +275,12 @@
       console.log("unloading")
       window.addEventListener("beforeunload", handleBeforeUnload)
     }
-  })
 
-  $: {
-    if (homeGrid) {
-      const background = $osStore.enviroment.background
-      if (background.base64) {
-        homeGrid.style.backgroundImage = `url(${background.base64})`
-      } else if (background.fileName) {
-        homeGrid.style.backgroundImage = `url(backgrounds/${background.fileName})`
-      } else if (background.color) {
-        homeGrid.style.backgroundColor = background.color
-        homeGrid.style.backgroundImage = null
-      }
+    if (isMobile()) {
+      gridColumns = 5
+      gridRows = 10
     }
-  }
+  })
 
   onDestroy(() => {
     window.removeEventListener("click", () => {
@@ -292,7 +304,11 @@
       style={`width: ${cellWidth}px; height: ${cellHeight}px;`}
       draggable={!!cell.iNode}
       on:dblclick={() => {
-        if (!cell.iNode) return
+        if (isMobile() || !cell.iNode) return
+        openApp(cell.iNode)
+      }}
+      on:click={() => {
+        if (!isMobile() || !cell.iNode) return
         openApp(cell.iNode)
       }}
       on:dragstart={(e) => {
@@ -310,11 +326,14 @@
             draggable="false"
             src={`/icons/${isFile ? currentItem.icon : "directory.png"}`}
             alt={cell.name}
+            style={isMobile()
+              ? `width: ${cellWidth / 1.8}`
+              : `width: ${cellWidth / 1.5}px;`}
           />
           <p
             draggable="false"
             style={`width: ${cellWidth - 8}px;`}
-            class="truncate text-sm text-center max-w-[115px]"
+            class="truncate sm:text:md lg:text-xs md:text-sm text-center max-w-[115px]"
           >
             {cell.name || "‎"}
           </p>

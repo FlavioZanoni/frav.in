@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@svtComp/*": ["./src/components/homePage/svelte/components/*"],
       "@homePage/*": ["src/components/homePage/*"],
       "@assets/*": ["./src/assets/*"],
       "@lib/*": ["./src/lib/*"],

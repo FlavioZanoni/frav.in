@@ -4,17 +4,19 @@ const readme = await Astro.glob("../../README.md")
 ---
 
 <script>
-  document.querySelectorAll("a").forEach((item)=>{
-    item.target="_blank"
+  document.querySelectorAll("a").forEach((item) => {
+    item.target = "_blank"
   })
 </script>
 
 <Layout title="Welcome">
   <div class="flex flex-col gap-2 p-4">
-  <h1 class="text-center mt-1 -mb-10">Welcome! </h1>
-  {readme.map((item)=>{
-    return (<item.Content/>)
-    })}
+    <h1 class="text-center mt-1 -mb-10">Welcome!</h1>
+    {
+      readme.map((item) => {
+        return <item.Content />
+      })
+    }
   </div>
 </Layout>
 
@@ -44,7 +46,8 @@ const readme = await Astro.glob("../../README.md")
     font-size: 1.5rem;
   }
 
-  p, pre {
+  p,
+  pre {
     margin-left: 1rem;
   }
 

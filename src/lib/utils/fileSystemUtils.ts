@@ -43,7 +43,6 @@ export const getItemByINode = (appId: string): DefaultItem | null => {
 }
 
 export const saveFileToDisk = (item: DefaultItem) => {
-  console.log("item", item)
   osStore.update((state) => {
     if (state.fileSystem.disk.files[item.name]) {
       state.fileSystem.disk.files[item.name].content = item.content

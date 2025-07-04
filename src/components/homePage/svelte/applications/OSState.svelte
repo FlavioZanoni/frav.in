@@ -1,6 +1,6 @@
 <script lang="ts">
   import jsonState from "@lib/store/state.json"
-  import Button from "../Button.svelte"
+  import Button from "@svtComp/Button.svelte"
   import { exportCurrentOSStore } from "@lib/utils/storeUtils"
   import type { OSStore } from "@lib/store/types"
   import { loadOSState } from "@lib/utils/storeUtils"

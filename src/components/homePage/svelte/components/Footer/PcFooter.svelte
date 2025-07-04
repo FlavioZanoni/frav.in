@@ -1,9 +1,9 @@
 <script lang="ts">
   import { osStore } from "@lib/store"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
-  import Button from "./Button.svelte"
-  import ChevronMenu from "./ChevronMenu.svelte"
-  import Menu from "./Menu.svelte"
+  import Button from "@svtComp/Button.svelte"
+  import ChevronMenu from "@svtComp/ChevronMenu.svelte"
+  import Menu from "@svtComp/Menu/Menu.svelte"
   import { openApp } from "@lib/utils/enviromentUtils"
 
   let clock = "00:00:00"
@@ -89,7 +89,7 @@
     {/if}
 
     {#if $osStore.enviroment.openApps}
-      {#each $osStore.enviroment.openApps as item}
+      {#each $osStore.enviroment.openApps as item (item.iNode)}
         {@const currentItem = getItemByINode(item.iNode)}
         <Button
           id={item.uuid}
@@ -111,7 +111,6 @@
             alt={item.name}
             class="w-5 h-5"
           />
-
           <span>{item.name}</span></Button
         >
       {/each}
@@ -126,7 +125,6 @@
       id="chevronButon"
       customCss="pt-2">^</Button
     >
-
     <div class="flex justify-center items-center min-w-[91px]">
       <p id="clock">{clock}</p>
     </div>

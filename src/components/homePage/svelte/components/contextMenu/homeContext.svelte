@@ -1,6 +1,6 @@
 <script lang="ts">
   import { osStore } from "@lib/store"
-  import Button from "../Button.svelte"
+  import Button from "@svtComp/Button.svelte"
 
   const handleBackground = () => {
     osStore.update((state) => {
