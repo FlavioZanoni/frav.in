@@ -3,7 +3,7 @@
 
   const handleColor = (color: string) => {
     osStore.update((state) => {
-      let background = state.enviroment.background
+      let background = state.environment.background
       background.color = color
       background.base64 = null
       background.fileName = null
@@ -13,7 +13,7 @@
 
   const handleDefaultImages = (fileName: string) => {
     osStore.update((state) => {
-      let background = state.enviroment.background
+      let background = state.environment.background
       background.color = null
       background.base64 = null
       background.fileName = fileName
@@ -30,11 +30,10 @@
       const base64 = e.target.result as string
 
       osStore.update((state) => {
-        let background = state.enviroment.background
+        let background = state.environment.background
         background.color = null
         background.base64 = base64
         background.fileName = null
-
         background.userImages.push({
           base64,
           fileName: file.name,
@@ -48,7 +47,7 @@
 
   const handleInMemoryImage = (base64: string) => {
     osStore.update((state) => {
-      let background = state.enviroment.background
+      let background = state.environment.background
       background.color = null
       background.base64 = base64
       background.fileName = null
@@ -76,13 +75,14 @@
 
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <h2 class="text-xl font-mediumw-full">Solid colors:</h2>
+      <h2 class="text-xl font-medium w-full">Solid colors:</h2>
       <div class="flex flex-wrap gap-4">
         {#each solidColors as color}
           <button
             on:click={() => handleColor(color)}
-            class={`w-10 h-10 border border-slate-200`}
+            class={`w-10 h-10 border ${$osStore.environment?.background?.color === color ? "border-4 border-blue-500" : "border-slate-200"}`}
             style={`background-color:${color}`}
+            aria-label={`Select ${color} as background color`}
           ></button>
         {/each}
       </div>
@@ -91,30 +91,20 @@
     <div class="flex flex-col gap-2">
       <h2 class="text-xl font-medium">Images:</h2>
       <div class="flex flex-wrap gap-4">
-        <button on:click={() => handleDefaultImages("Bliss.webp")}>
-          <img
-            src="backgrounds/Bliss.webp"
-            class="w-28 h-16 bg-cover bg-center"
-            alt="Bliss background"
-          />
-          <p>Bliss</p>
-        </button>
-        <button on:click={() => handleDefaultImages("Autumn.webp")}>
-          <img
-            src="backgrounds/Autumn.webp"
-            class="w-28 h-16 bg-cover bg-center"
-            alt="Autumn background"
-          />
-          <p>Autumn</p>
-        </button>
-        <button on:click={() => handleDefaultImages("Tsumugi.webp")}>
-          <img
-            src="backgrounds/Tsumugi.webp"
-            class="w-28 h-16 bg-cover bg-center"
-            alt="Kotobuki Tsumugi from K-ON! as a background"
-          />
-          <p>Tsumugi</p>
-        </button>
+        {#each ["Bliss.webp", "Autumn.webp", "Tsumugi.webp"] as fileName}
+          <button
+            on:click={() => handleDefaultImages(fileName)}
+            class={`w-28 ${$osStore.environment?.background?.fileName === fileName ? "border-4 border-blue-500" : "border border-slate-200"}`}
+            aria-label={`Select ${fileName.split(".")[0]} as background image`}
+          >
+            <img
+              src={`backgrounds/${fileName}`}
+              class="w-28 h-auto bg-cover bg-center"
+              alt={`${fileName.split(".")[0]} background`}
+            />
+            <p>{fileName.split(".")[0]}</p>
+          </button>
+        {/each}
       </div>
     </div>
 
@@ -129,24 +119,25 @@
       <input on:change={handleCustomImage} type="file" accept="image/*" />
     </div>
 
-    <div>
-      {#if $osStore.enviroment.background.userImages.length}
-        <div class="flex flex-col gap-2">
-          <h2 class="text-xl font-medium">Your images:</h2>
-          <div class="flex flex-wrap gap-4">
-            {#each $osStore.enviroment.background.userImages as image}
-              <button on:click={() => handleInMemoryImage(image.base64)}>
-                <img
-                  src={image.base64}
-                  class="w-28 bg-cover bg-center"
-                  alt={image.fileName}
-                />
-                <p>{image.fileName.split(".")[0]}</p>
-              </button>
-            {/each}
-          </div>
+    {#if $osStore.environment.background.userImages.length}
+      <div class="flex flex-col gap-2">
+        <h2 class="text-xl font-medium">Your images:</h2>
+        <div class="flex flex-wrap gap-4">
+          {#each $osStore.environment.background.userImages as image}
+            <button
+              on:click={() => handleInMemoryImage(image.base64)}
+              class={`w-28 h-16 ${$osStore.environment?.background?.base64 === image.base64 ? "border-4 border-blue-500" : "border border-slate-200"}`}
+            >
+              <img
+                src={image.base64}
+                class="w-28 h-16 bg-cover bg-center"
+                alt={image.fileName}
+              />
+              <p>{image.fileName.split(".")[0]}</p>
+            </button>
+          {/each}
         </div>
-      {/if}
-    </div>
+      </div>
+    {/if}
   </div>
 </div>

@@ -6,7 +6,7 @@
     HomeGridItem,
     OSStore,
   } from "@lib/store/types"
-  import { openApp, openAppByName } from "@lib/utils/enviromentUtils"
+  import { openApp, openAppByName } from "@lib/utils/environmentUtils"
   import { isMobile } from "@lib/utils/browserUtils"
   import { getItemByINode, isFileBlock, mv } from "@lib/utils/fileSystemUtils"
   import { saveCurrentOSStore } from "@lib/utils/storeUtils"
@@ -61,7 +61,7 @@
     // populate grid with state
     grid = [
       ...gridItems.map((cell) => {
-        const cellState = $osStore.enviroment.homeGrid.items.find(
+        const cellState = $osStore.environment.homeGrid.items.find(
           (s) => s.pos.x === cell.pos.x && s.pos.y === cell.pos.y
         )
 
@@ -75,8 +75,8 @@
   $: {
     const desktopApps = $osStore.fileSystem.iNodes[HOME_INODE]
       .blocks as DirectoryBlock[]
-    const screenApps = $osStore.enviroment.homeGrid.items
-    let homeGrid = $osStore.enviroment.homeGrid
+    const screenApps = $osStore.environment.homeGrid.items
+    let homeGrid = $osStore.environment.homeGrid
 
     const removeItems = (diff: HomeGridItem[]) => {
       homeGrid.items = homeGrid.items.filter((item) => {
@@ -150,7 +150,7 @@
     ) as HomeGridItem
 
     osStore.update((state) => {
-      const homeGrid = state.enviroment.homeGrid
+      const homeGrid = state.environment.homeGrid
       const { iNodes } = state.fileSystem
 
       const itemToUpdate = homeGrid.items.find(
@@ -229,9 +229,10 @@
     e.preventDefault()
   }
 
+  let homeGrid: HTMLElement | null = null
   $: {
     if (homeGrid) {
-      const background = $osStore.enviroment.background
+      const background = $osStore.environment.background
       if (background.base64) {
         homeGrid.style.backgroundImage = `url(${background.base64})`
       } else if (background.fileName) {
@@ -239,13 +240,12 @@
       } else if (background.color) {
         homeGrid.style.backgroundColor = background.color
         homeGrid.style.backgroundImage = null
+      } else {
+        homeGrid.style.backgroundColor = "black"
       }
-
-      homeGrid.style.backgroundColor = "red"
     }
   }
 
-  let homeGrid: HTMLElement | null = null
   onMount(() => {
     let store: OSStore | null = null
     try {

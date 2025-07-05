@@ -1,7 +1,7 @@
 <script lang="ts">
   import pkgjson from "../../../../../../package.json"
   import { osStore } from "@lib/store"
-  import { openApp } from "@lib/utils/enviromentUtils"
+  import { openApp } from "@lib/utils/environmentUtils"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
   import { onMount } from "svelte"
 
@@ -37,7 +37,7 @@
   <div class="flex flex-col w-full h-full">
     <div class="flex-1 overflow-y-auto p-4">
       <div class="grid grid-cols-4 gap-4">
-        {#each $osStore.enviroment.menu.items as item (item.iNode)}
+        {#each $osStore.environment.menu.items as item (item.iNode)}
           {@const currentItem = getItemByINode(item.iNode)}
           <button
             class="flex flex-col items-center justify-center gap-2 bg-slate-300 dark:bg-slate-700 p-4 rounded hover:bg-slate-400 dark:hover:bg-slate-600 transition"

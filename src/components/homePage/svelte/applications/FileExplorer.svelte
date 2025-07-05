@@ -8,7 +8,7 @@
     INodes,
   } from "@lib/store/types"
   import FileTree from "./FileTree.svelte"
-  import { openApp } from "@lib/utils/enviromentUtils"
+  import { openApp } from "@lib/utils/environmentUtils"
   import Button from "@svtComp/Button.svelte"
   type Dir = { name: string; hasChildren: boolean; iNode: string }
 

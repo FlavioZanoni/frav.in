@@ -4,7 +4,7 @@
 
   const handleBackground = () => {
     osStore.update((state) => {
-      state.enviroment.openApps.push({
+      state.environment.openApps.push({
         name: "background",
         iNode: "9",
         uuid: crypto.randomUUID().toString(),
@@ -19,7 +19,7 @@
 
   const toggleCRT = () => {
     osStore.update((state) => {
-      state.enviroment.config.crt = !state.enviroment.config.crt
+      state.environment.config.crt = !state.environment.config.crt
       return state
     })
   }

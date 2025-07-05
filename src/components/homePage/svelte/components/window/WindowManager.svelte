@@ -3,7 +3,7 @@
   import Window from "./Window.svelte"
 </script>
 
-{#each $osStore.enviroment.openApps as { ...app } (app.uuid)}
+{#each $osStore.environment.openApps as { ...app } (app.uuid)}
   {#if !app.isMinimized}
     <Window {...app} />
   {/if}

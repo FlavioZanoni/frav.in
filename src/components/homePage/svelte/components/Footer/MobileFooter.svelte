@@ -4,12 +4,12 @@
   import Button from "@svtComp/Button.svelte"
   import ChevronMenu from "@svtComp/ChevronMenu.svelte"
   import Menu from "@svtComp/Menu/Menu.svelte"
-  import { openApp } from "@lib/utils/enviromentUtils"
+  import { openApp } from "@lib/utils/environmentUtils"
   import { isMobile } from "@lib/utils/browserUtils"
 
   let showMenu = false
   let showChevronMenu = false
-  let length = $osStore.enviroment.taskbar.items.length
+  let length = $osStore.environment.taskbar.items.length
 
   const handleClickOutsideMenu = (e) => {
     const menu = document.getElementById("menu")
@@ -73,8 +73,8 @@
         ₪
       </Button>
     {/if}
-    {#if $osStore.enviroment.taskbar.items}
-      {#each $osStore.enviroment.taskbar.items as item, index}
+    {#if $osStore.environment.taskbar.items}
+      {#each $osStore.environment.taskbar.items as item, index}
         {@const currentItem = getItemByINode(item.iNode)}
         {#if isMobile()}
           {#if Math.round(length / 2) == index}

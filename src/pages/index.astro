@@ -17,7 +17,7 @@ import TopBar from "@components/homePage/svelte/components/TopBar/TopBar.svelte"
     osStore.update(() => JSON.parse(localStorage.getItem("FZOSStore")))
   }
   osStore.subscribe((value) => {
-    if (value.enviroment.config.crt) {
+    if (value.environment.config.crt) {
       document.getElementById("home-content").classList.add("crt")
       document.getElementById("scan").classList.add("scan-lines")
     } else {

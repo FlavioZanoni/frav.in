@@ -1,5 +1,5 @@
 export type OSStore = {
-  enviroment: Enviroment
+  environment: Enviroment
   fileSystem: FileSystem
 }
 

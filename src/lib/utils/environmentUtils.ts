@@ -39,7 +39,7 @@ export const openApp = (appId: string) => {
     }
 
     item.name = parent.name
-    state.enviroment.openApps.push(item)
+    state.environment.openApps.push(item)
     return state
   })
   // unfocus other apps and focus this one
@@ -76,7 +76,7 @@ export const openAppByName = (appName: string) => {
     }
     if (newItem.iNode) {
       newItem.name = parent.name
-      state.enviroment.openApps.push(newItem)
+      state.environment.openApps.push(newItem)
     }
     return state
   })
@@ -88,7 +88,7 @@ export const openAppByName = (appName: string) => {
 
 export const closeApp = (appUuid: string) => {
   osStore.update((state) => {
-    state.enviroment.openApps = state.enviroment.openApps.filter(
+    state.environment.openApps = state.environment.openApps.filter(
       (item) => item.uuid !== appUuid
     )
 
@@ -102,14 +102,14 @@ export const minimizeApp = (
   lastSize: Size
 ) => {
   osStore.update((state) => {
-    const thisApp = state.enviroment.openApps.find(
+    const thisApp = state.environment.openApps.find(
       (app) => app.uuid === appUuid
     )
     thisApp.isMinimized = true
     thisApp.lastPos = { x: lastPos.x, y: lastPos.y }
     thisApp.lastSize = { width: lastSize.width, height: lastSize.height }
 
-    state.enviroment.openApps = state.enviroment.openApps.map((app) => {
+    state.environment.openApps = state.environment.openApps.map((app) => {
       if (app.uuid === appUuid) {
         return thisApp
       }
@@ -127,7 +127,7 @@ export const maximizeApp = (
   lastSize: Size
 ) => {
   osStore.update((state) => {
-    const thisApp = state.enviroment.openApps.find(
+    const thisApp = state.environment.openApps.find(
       (app) => app.uuid === appUuid
     )
 
@@ -137,7 +137,7 @@ export const maximizeApp = (
     }
     thisApp.isMaximized = !thisApp.isMaximized
 
-    state.enviroment.openApps = state.enviroment.openApps.map((app) => {
+    state.environment.openApps = state.environment.openApps.map((app) => {
       if (app.uuid === appUuid) {
         return thisApp
       }
@@ -151,7 +151,7 @@ export const maximizeApp = (
 
 export const focusApp = (appUuid: string) => {
   osStore.update((state) => {
-    state.enviroment.openApps.forEach((item) => {
+    state.environment.openApps.forEach((item) => {
       item.isFocused = item.uuid === appUuid
     })
 
@@ -165,5 +165,5 @@ export const isAppOpen = (appId: string) => {
     state = value
   })
 
-  return state.enviroment.openApps.some((item) => item.iNode === appId)
+  return state.environment.openApps.some((item) => item.iNode === appId)
 }

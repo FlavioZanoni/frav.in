@@ -4,7 +4,7 @@
 
   let crt = true
   osStore.subscribe((state) => {
-    crt = state.enviroment.config.crt
+    crt = state.environment.config.crt
   })
 
   export let id: string
@@ -14,7 +14,7 @@
 
   const toggleCRT = () => {
     osStore.update((state) => {
-      state.enviroment.config.crt = !state.enviroment.config.crt
+      state.environment.config.crt = !state.environment.config.crt
       return state
     })
   }

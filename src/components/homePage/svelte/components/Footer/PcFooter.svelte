@@ -4,7 +4,7 @@
   import Button from "@svtComp/Button.svelte"
   import ChevronMenu from "@svtComp/ChevronMenu.svelte"
   import Menu from "@svtComp/Menu/Menu.svelte"
-  import { openApp } from "@lib/utils/enviromentUtils"
+  import { openApp } from "@lib/utils/environmentUtils"
 
   let clock = "00:00:00"
   let showMenu = false
@@ -74,8 +74,8 @@
       variant="secondary"
       id="menuBtn">₪ Menu</Button
     >
-    {#if $osStore.enviroment.taskbar.items}
-      {#each $osStore.enviroment.taskbar.items as item (item.iNode)}
+    {#if $osStore.environment.taskbar.items}
+      {#each $osStore.environment.taskbar.items as item (item.iNode)}
         {@const currentItem = getItemByINode(item.iNode)}
         <Button id={item.iNode} on:click={() => openApp(item.iNode)}>
           <img
@@ -88,20 +88,20 @@
       {/each}
     {/if}
 
-    {#if $osStore.enviroment.openApps}
-      {#each $osStore.enviroment.openApps as item}
+    {#if $osStore.environment.openApps}
+      {#each $osStore.environment.openApps as item}
         {@const currentItem = getItemByINode(item.iNode)}
         <Button
           id={item.uuid}
           customCss={item.isFocused ? "bg-gray-100" : "bg-gray-300"}
           on:click={() => {
             osStore.update((state) => {
-              const currentItem = state.enviroment.openApps.findIndex(
+              const currentItem = state.environment.openApps.findIndex(
                 (app) => app.uuid === item.uuid
               )
 
-              state.enviroment.openApps[currentItem].isMinimized =
-                !state.enviroment.openApps[currentItem].isMinimized
+              state.environment.openApps[currentItem].isMinimized =
+                !state.environment.openApps[currentItem].isMinimized
               return state
             })
           }}

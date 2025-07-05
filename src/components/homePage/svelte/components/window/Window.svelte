@@ -6,7 +6,7 @@
     focusApp,
     maximizeApp,
     minimizeApp,
-  } from "@lib/utils/enviromentUtils"
+  } from "@lib/utils/environmentUtils"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
   import WindowContent from "./WindowContent.svelte"
   import { onMount } from "svelte"
@@ -32,7 +32,7 @@
 
   let item: DefaultItem | OpenApp = getItemByINode(iNode)
   if (!item) {
-    item = $osStore.enviroment.openApps.find((item) => (item.iNode = iNode))
+    item = $osStore.environment.openApps.find((item) => (item.iNode = iNode))
   }
 
   //TODO: move this to the state
@@ -111,7 +111,7 @@
   function handleMouseup() {
     // Update the last position and size of the app
     osStore.update((state) => {
-      let openApps = state.enviroment.openApps
+      let openApps = state.environment.openApps
 
       const thisApp = openApps.find((app) => app.uuid === uuid)
       thisApp.lastSize = { width, height }
@@ -165,7 +165,7 @@
 
   function handleMouseupResize() {
     osStore.update((state) => {
-      let openApps = state.enviroment.openApps
+      let openApps = state.environment.openApps
       const thisApp = openApps.find((app) => app.uuid === uuid)
       thisApp.lastPos = { x, y }
       thisApp.lastSize = { width: startWidth + dx, height: startHeight + dy }
