@@ -1,40 +1,76 @@
 ---
+import { SEO } from "astro-seo"
+
 interface Props {
   title: string
 }
 
 const { title } = Astro.props
+
+const DEFAULT_TITLE_PAGE = "Flávio Zanoni - Portfolio"
+const DEFAULT_DESCRIPTION_PAGE =
+  "OS-like portfolio showcasing projects, skills, and resume."
+const DEFAULT_URL_SITE = "https://frav.in"
+const DEFAULT_IMAGE =
+  "https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
+
+const openGraph = {
+  title: title || DEFAULT_TITLE_PAGE,
+  type: "website",
+  image: DEFAULT_IMAGE,
+  alt: "Site logo - CRT monitor",
+  url: DEFAULT_URL_SITE,
+  description: DEFAULT_DESCRIPTION_PAGE,
+}
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-16" />
-    <meta name="description" content="Flávio Zanoni - Portifolio" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.ico" />
-    <link rel="icon" sizes="16x16" href="/favicon/favicon-16x16.png" />
-    <link rel="icon" sizes="32x32" href="/favicon/favicon-32x32.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <link rel="stylesheet" href="retroStyle.css" />
-    <link rel="stylesheet" href="scrollbar.css" />
+    <SEO
+      charset="UTF-8"
+      title={openGraph.title}
+      description={openGraph.description}
+      openGraph={{
+        basic: {
+          title: openGraph.title,
+          type: openGraph.type,
+          image: openGraph.image,
+          url: openGraph.url,
+        },
+        image: {
+          alt: openGraph.alt,
+        },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title: openGraph.title,
+        description: openGraph.description,
+        image: openGraph.image,
+        imageAlt: openGraph.alt,
+      }}
+      extend={{
+        link: [
+          { rel: "icon", href: "/favicon/favicon.ico" },
+          { rel: "icon", sizes: "16x16", href: "/favicon/favicon-16x16.png" },
+          { rel: "icon", sizes: "32x32", href: "/favicon/favicon-32x32.png" },
+          { rel: "manifest", href: "/manifest.webmanifest" },
+          { rel: "sitemap", href: "/sitemap-index.xml" },
+          { rel: "canonical", href: DEFAULT_URL_SITE },
+        ],
+        meta: [
+          { name: "viewport", content: "width=device-width, initial-scale=1" },
+          { name: "generator", content: Astro.generator },
+          { name: "author", content: "Flávio Zanoni" },
+          { name: "robots", content: "index, follow" },
+          { property: "og:site_name", content: DEFAULT_TITLE_PAGE },
+          { property: "og:locale", content: "en_US" },
+          { property: "og:locale:alternate", content: "pt_BR" },
+        ],
+      }}
+    />
 
-    <meta name="author" content="Flávio Zanoni" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://frav.in" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-
-    <!-- analytics -->
-    <script
-      is:inline
-      defer
-      data-domain="frav.in"
-      src="https://plausible-analytics.yoshuu.com/js/script.file-downloads.outbound-links.js"
-    ></script>
-
-    <!-- schema -->
+    <!-- Schema.org JSON-LD -->
     <script is:inline type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -42,12 +78,12 @@ const { title } = Astro.props
         "name": "Flávio Zanoni",
         "url": "https://frav.in",
         "image": "https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png",
-        "description": "OS-like portfolio showcasing projects, skills, and resume.",
+        "description": "OS-like portfolio showcasing projects, skills and resume.",
         "sameAs": [
           "https://github.com/FlavioZanoni",
           "https://www.linkedin.com/in/flaviozanoni/"
         ],
-        "jobTitle": "Frontend Developer",
+        "jobTitle": "Embedded Developer/ Frontend Developer",
         "worksFor": {
           "@type": "Organization",
           "name": "Folhastech"
@@ -55,39 +91,17 @@ const { title } = Astro.props
       }
     </script>
 
-    <!-- OG -->
-    <meta
-      property="og:logo"
-      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
-    />
-    <meta property="og:site_name" content="Flávio Zanoni - Portfolio" />
-    <meta property="og:title" content="Flávio Zanoni - Portfolio" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://frav.in" />
-    <meta
-      property="og:image"
-      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
-    />
-    <meta property="og:image:alt" content="Site logo - CRT monitor" />
-    <meta
-      property="og:description"
-      content="OS like portfolio, showing my projects and resume"
-    />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:locale:alternate" content="pt_BR" />
+    <!-- Analytics -->
+    <script
+      is:inline
+      defer
+      data-domain="frav.in"
+      src="https://plausible-analytics.yoshuu.com/js/script.file-downloads.outbound-links.js"
+    ></script>
 
-    <!-- Twitter -->
-    <meta name="twitter:title" content="Flávio Zanoni - Portfolio" />
-    <meta
-      name="twitter:description"
-      content="OS like portfolio, showing my projects and resume"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:image"
-      content="https://raw.githubusercontent.com/FlavioZanoni/FlavioZanoni.com/main/public/og.png"
-    />
-    <meta name="twitter:image:alt" content="Site logo - CRT monitor" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="retroStyle.css" />
+    <link rel="stylesheet" href="scrollbar.css" />
   </head>
   <body class="flex flex-col justify-between font-display overflow-clip">
     <slot />

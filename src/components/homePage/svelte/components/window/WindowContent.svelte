@@ -30,7 +30,7 @@
       class="w-full h-full"
       src={`${link}?isInOS=true`}
       frameborder="0"
-    />
+    ></iframe>
   </div>
 {:else if appName === "recycleBin"}
   <FileExplorer name={"recycleBin"} iNode={RECYCLE_BIN_INODE} />
