@@ -9,7 +9,7 @@
   import { openApp, openAppByName } from "@lib/utils/environmentUtils"
   import { isMobile } from "@lib/utils/browserUtils"
   import { getItemByINode, isFileBlock, mv } from "@lib/utils/fileSystemUtils"
-  import { saveCurrentOSStore } from "@lib/utils/storeUtils"
+  import { loadOSState, saveCurrentOSStore } from "@lib/utils/storeUtils"
   import { onDestroy, onMount } from "svelte"
   import ContextMenu from "@svtComp/contextMenu/ContextMenu.svelte"
   import HomeAppContext from "@svtComp/contextMenu/homeAppContext.svelte"
@@ -229,7 +229,6 @@
     e.preventDefault()
   }
 
-  let homeGrid: HTMLElement | null = null
   $: {
     if (homeGrid) {
       const background = $osStore.environment.background
@@ -246,6 +245,7 @@
     }
   }
 
+  let homeGrid: HTMLElement | null = null
   onMount(() => {
     let store: OSStore | null = null
     try {
@@ -257,7 +257,7 @@
       console.error("Error getting store from local storage", e)
     }
 
-    if (store) {
+    if (store && store.environment) {
       osStore.set(store)
     }
 

@@ -1,9 +1,9 @@
 export type OSStore = {
-  environment: Enviroment
+  environment: Environment
   fileSystem: FileSystem
 }
 
-export interface Enviroment {
+export interface Environment {
   homeGrid: {
     items: HomeGridItem[]
     size: {
@@ -12,10 +12,10 @@ export interface Enviroment {
     }
   }
   taskbar: {
-    items: EnviromentItem[]
+    items: EnvironmentItem[]
   }
   menu: {
-    items: EnviromentItem[]
+    items: EnvironmentItem[]
   }
   openApps: OpenApp[]
   config: {
@@ -77,13 +77,13 @@ export type Size = {
 
 export type ItemType = "directory" | "file" | "app" | "empty"
 
-export interface EnviromentItem {
+export interface EnvironmentItem {
   iNode?: string
   name?: string
   type: ItemType
 }
 
-export interface HomeGridItem extends EnviromentItem {
+export interface HomeGridItem extends EnvironmentItem {
   pos: Position
 }
 

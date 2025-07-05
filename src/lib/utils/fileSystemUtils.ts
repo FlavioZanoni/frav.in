@@ -3,7 +3,7 @@ import type {
   DefaultItem,
   DirectoryBlock,
   Disk,
-  EnviromentItem,
+  EnvironmentItem,
   FileBlock,
   INode,
   INodes,
@@ -59,7 +59,7 @@ export type GetItemsInArrayByINode = {
 }
 
 export const getItemsInArrayByINode = (
-  arr: EnviromentItem[]
+  arr: EnvironmentItem[]
 ): GetItemsInArrayByINode => {
   const items: GetItemsInArrayByINode = {}
   arr.forEach((item) => {
