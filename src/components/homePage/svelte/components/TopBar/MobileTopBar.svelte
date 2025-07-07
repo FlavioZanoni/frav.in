@@ -14,18 +14,28 @@
     const seconds = String(now.getSeconds()).padStart(2, "0")
     clock = `${hours}:${minutes}:${seconds}`
   }
-  const updateInfo = () => {
-    info = getConnectionInfo()
-  }
 
-  setInterval(() => {
+  setInterval(async () => {
     updateClock()
-    updateInfo()
+    info = getConnectionInfo()
+    sysInfo = await getSystemInfo()
   }, 1000)
 
   onMount(async () => {
     sysInfo = await getSystemInfo()
   })
+
+  const getBatteryIco = () => {
+    if (sysInfo?.battery?.charging) {
+      return "◙"
+    } else if (sysInfo?.battery?.level < 0.1) {
+      return "▁"
+    } else if (sysInfo?.battery?.level < 0.7) {
+      return "▄"
+    } else {
+      return "█"
+    }
+  }
 </script>
 
 <section
@@ -49,7 +59,9 @@
             ? "text-yellow-500"
             : "text-white"}
     >
-      {sysInfo?.battery ? `${sysInfo.battery.level * 100}%` : "N/A"}
+      {getBatteryIco()}{sysInfo?.battery
+        ? `${sysInfo.battery.level * 100}%`
+        : "N/A"}
     </p>
   </div>
 </section>
