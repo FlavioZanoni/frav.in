@@ -54,6 +54,6 @@
   - [x] populate the menu popup
   - [x] change mouse cursor to a lower res one
   - [x] auto-open windows with url param
-  - [ ] find out what to do with mobile users
+  - [x] find out what to do with mobile users
   - [ ] threejs animated background
   - [ ] keybind system (close and fullscreen windows, open term etc...)
