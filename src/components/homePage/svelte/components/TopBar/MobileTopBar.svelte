@@ -44,12 +44,12 @@
 >
   <div class="flex justify-center items-center gap-2">
     <p id="clock">{clock}</p>
-    <p>{info.type}</p>
+    <p>{info.downlink}Mb/s</p>
   </div>
 
   <div class="flex justify-center items-center gap-2">
-    <p>{info.downlink}</p>
     <p>{info.effectiveType}</p>
+    <p>{info.type}</p>
     <p
       class={sysInfo?.battery?.charging
         ? "text-green-500"

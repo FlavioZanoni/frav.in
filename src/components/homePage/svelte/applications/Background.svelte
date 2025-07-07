@@ -1,5 +1,8 @@
 <script lang="ts">
   import { osStore } from "@lib/store"
+  import { onMount } from "svelte"
+
+  let homeGrid: HTMLDivElement
 
   const handleColor = (color: string) => {
     osStore.update((state) => {
@@ -7,6 +10,8 @@
       background.color = color
       background.base64 = null
       background.fileName = null
+      homeGrid.style.backgroundImage = `none`
+      homeGrid.style.backgroundColor = color
       return state
     })
   }
@@ -17,6 +22,7 @@
       background.color = null
       background.base64 = null
       background.fileName = fileName
+      homeGrid.style.backgroundImage = `url(backgrounds/${fileName})`
       return state
     })
   }
@@ -38,6 +44,7 @@
           base64,
           fileName: file.name,
         })
+        homeGrid.style.backgroundImage = `url(${base64})`
         return state
       })
     }
@@ -51,6 +58,7 @@
       background.color = null
       background.base64 = base64
       background.fileName = null
+      homeGrid.style.backgroundImage = `url(${base64})`
       return state
     })
   }
@@ -68,6 +76,22 @@
     "#ffffff",
     "#000000",
   ]
+
+  onMount(() => {
+    osStore.update((state) => {
+      if (!state.environment.background) {
+        state.environment.background = {
+          color: null,
+          base64: null,
+          fileName: null,
+          userImages: [],
+        }
+      }
+      return state
+    })
+
+    homeGrid = document.getElementById("home-grid") as HTMLDivElement
+  })
 </script>
 
 <div class="flex flex-col gap-4 p-4 w-full h-full overflow-y-auto">
@@ -126,7 +150,8 @@
           {#each $osStore.environment.background.userImages as image}
             <button
               on:click={() => handleInMemoryImage(image.base64)}
-              class={`w-28 h-16 ${$osStore.environment?.background?.base64 === image.base64 ? "border-4 border-blue-500" : "border border-slate-200"}`}
+              class={`w-28 ${$osStore.environment?.background?.base64 === image.base64 ? "border-4 border-blue-500" : "border border-slate-200"}`}
+              aria-label={`Select ${image.fileName.split(".")[0]} as background image`}
             >
               <img
                 src={image.base64}

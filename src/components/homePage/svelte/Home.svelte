@@ -9,7 +9,7 @@
   import { openApp, openAppByName } from "@lib/utils/environmentUtils"
   import { isMobile } from "@lib/utils/browserUtils"
   import { getItemByINode, isFileBlock, mv } from "@lib/utils/fileSystemUtils"
-  import { loadOSState, saveCurrentOSStore } from "@lib/utils/storeUtils"
+  import { saveCurrentOSStore } from "@lib/utils/storeUtils"
   import { onDestroy, onMount } from "svelte"
   import ContextMenu from "@svtComp/contextMenu/ContextMenu.svelte"
   import HomeAppContext from "@svtComp/contextMenu/homeAppContext.svelte"
@@ -229,22 +229,6 @@
     e.preventDefault()
   }
 
-  $: {
-    if (homeGrid) {
-      const background = $osStore.environment.background
-      if (background.base64) {
-        homeGrid.style.backgroundImage = `url(${background.base64})`
-      } else if (background.fileName) {
-        homeGrid.style.backgroundImage = `url(backgrounds/${background.fileName})`
-      } else if (background.color) {
-        homeGrid.style.backgroundColor = background.color
-        homeGrid.style.backgroundImage = null
-      } else {
-        homeGrid.style.backgroundColor = "black"
-      }
-    }
-  }
-
   let homeGrid: HTMLElement | null = null
   onMount(() => {
     let store: OSStore | null = null
@@ -280,6 +264,26 @@
       gridColumns = 5
       gridRows = 10
     }
+
+    // set initial background
+    // idk why its needing a timeout, aparently it needs to wait for the DOM to be ready
+    setTimeout(() => {
+      const background = $osStore.environment.background
+
+      if (homeGrid) {
+        homeGrid.style.backgroundColor = background.color
+        if (background.base64) {
+          homeGrid.style.backgroundImage = `url(${background.base64})`
+        } else if (background.fileName) {
+          homeGrid.style.backgroundImage = `url(backgrounds/${background.fileName})`
+        } else if (background.color) {
+          homeGrid.style.backgroundColor = background.color
+          homeGrid.style.backgroundImage = null
+        } else {
+          homeGrid.style.backgroundColor = "black"
+        }
+      }
+    }, 0.1)
   })
 
   onDestroy(() => {

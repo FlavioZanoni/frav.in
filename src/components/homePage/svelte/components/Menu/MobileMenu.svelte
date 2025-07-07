@@ -22,7 +22,7 @@
       ?.getBoundingClientRect()
     height =
       window.innerHeight -
-      (taskbarRect?.height || 40) -
+      (taskbarRect?.height || 55) -
       (topBarRect?.height || 40)
   })
 
@@ -40,7 +40,7 @@
         {#each $osStore.environment.menu.items as item (item.iNode)}
           {@const currentItem = getItemByINode(item.iNode)}
           <button
-            class="flex flex-col items-center justify-center gap-2 bg-slate-300 dark:bg-slate-700 p-4 rounded hover:bg-slate-400 dark:hover:bg-slate-600 transition"
+            class="flex flex-col items-center justify-center gap-2 bg-slate-300/65 dark:bg-slate-700/55 p-3 rounded"
             on:click={() => {
               openApp(item.iNode)
             }}
