@@ -70,6 +70,11 @@ const openGraph = {
       }}
     />
 
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+
     <!-- Schema.org JSON-LD -->
     <script is:inline type="application/ld+json">
       {
@@ -96,8 +101,7 @@ const openGraph = {
       is:inline
       defer
       data-domain="frav.in"
-      src="https://plausible-analytics.yoshuu.com/js/script.file-downloads.outbound-links.js"
-    ></script>
+      src="https://analytics.frav.in/js/script.js"></script>
 
     <!-- Styles -->
     <link rel="stylesheet" href="retroStyle.css" />

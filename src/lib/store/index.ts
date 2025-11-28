@@ -20,4 +20,4 @@ osStore.subscribe((value) => {
   value.fileSystem.disk.apps["recycleBin"].icon = "trash.png"
 })
 
-export { RECYCLE_BIN_INODE, HOME_INODE, osStore } 
+export { RECYCLE_BIN_INODE, HOME_INODE, osStore }

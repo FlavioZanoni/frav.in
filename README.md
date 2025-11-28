@@ -19,8 +19,8 @@ Every feature can change at anytime and change any other parts of the code.
 ## Description
 
 - This project is an "operating system", designed to host my projects, resume, and a playground for me to test new technologies and ideas.
-- The base of the project is made with [Astro](https://astro.build) witch will allow me try out any framework that I want to test, like React, Preact, Svelte, etc.
-- The core "OS" part of the project is made with [Svelte](https://svelte.dev) just because I wanted to learn it, and i think it's a great framework.
+- The base of the project is made with [Astro](https://astro.build) which will allow me try out any framework that I want to test, like React, Preact, Svelte, etc.
+- The core "OS" part of the project is made with [Svelte](https://svelte.dev) just because I wanted to learn it, and I think it's a great framework.
 
 ## Roadmap
 
@@ -28,7 +28,7 @@ A very basic feature/bugs planning can be found [here](https://github.com/Flavio
 
 ## Forks and PRs
 
-- I will generally do not accept PRs, but if you want to fork it, feel free to do so.
+- I will generally not accept PRs, but if you want to fork it, feel free to do so.
 
 ## License
 
