@@ -99,7 +99,7 @@
         iNode={iNodes[block.iNode]}
         dirName={block.name}
         iNodeKey={block.iNode}
-        depth={(depth += 1)}
+        depth={depth + 1}
         {updateCurrentDir}
         {currentOpen}
       ></svelte:self>
