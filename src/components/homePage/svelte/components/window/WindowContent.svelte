@@ -5,6 +5,7 @@
   import ThisComputer from "../../applications/ThisComputer.svelte"
   import TextEditor from "../../applications/TextEditor.svelte"
   import { RECYCLE_BIN_INODE } from "@lib/store"
+  import FlappyRenk from "../../applications/games/FlappyRenk.svelte"
 
   export let appName: string
   export let iNode: string
@@ -18,6 +19,7 @@
     background: Background,
     fileExplorer: FileExplorer,
     thisComputer: ThisComputer,
+    flappy: FlappyRenk,
   }
 </script>
 
