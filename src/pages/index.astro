@@ -30,7 +30,10 @@ import TopBar from "@components/homePage/svelte/components/TopBar/TopBar.svelte"
 <Layout title="Flávio Zanoni - Portfolio">
   {import.meta.env.PROD && <Boot />}
   <div id="home-content" class="crt">
-    <div id="scan" class="scan-lines">
+    <div
+      id="scan"
+      class="scan-lines flex flex-col overflow-clip justify-between h-svh"
+    >
       <TopBar client:only="svelte" />
       <main id="main">
         <Home client:only="svelte" />

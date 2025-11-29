@@ -330,8 +330,8 @@
             draggable="false"
             src={`/icons/${isFile ? currentItem.icon : "directory.png"}`}
             alt={cell.name}
-            style:width={`${Math.min(cellWidth * 0.6, 64)}px`}
-            style:height={`${Math.min(cellWidth * 0.6, 64)}px`}
+            style:width={`${Math.min(cellWidth * 0.5, 64)}px`}
+            style:height={`${Math.min(cellWidth * 0.5, 64)}px`}
           />
           <p
             draggable="false"
