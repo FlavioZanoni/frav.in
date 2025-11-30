@@ -55,6 +55,15 @@
           },
           "type": "file",
           "name": "welcome.txt"
+        },
+        {
+          "iNode": "15",
+          "pos": {
+            "x": 1,
+            "y": 1
+          },
+          "type": "app",
+          "name": "Flappy.exe"
         }
       ],
       "size": {
@@ -151,6 +160,10 @@
           {
             "name": "welcome.txt",
             "iNode": "14"
+          },
+          {
+            "name": "flappy",
+            "iNode": "15"
           }
         ]
       },
@@ -264,6 +277,15 @@
             "name": "welcome.txt"
           }
         ]
+      },
+      "15": {
+        "type": "app",
+        "blocks": [
+          {
+            "location": "apps",
+            "name": "flappy"
+          }
+        ]
       }
     },
     "disk": {
@@ -288,6 +310,12 @@
           "name": "Recycle bin",
           "appName": "recycleBin",
           "icon": "trash.png",
+          "type": "app"
+        },
+        "flappy": {
+          "name": "Flappy Renk",
+          "appName": "flappy",
+          "icon": "flappy.png",
           "type": "app"
         },
         "thisComputer": {
@@ -326,3 +354,4 @@
     }
   }
 }
+
