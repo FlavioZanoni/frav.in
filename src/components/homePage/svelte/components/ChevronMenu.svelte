@@ -7,8 +7,6 @@
     crt = state.environment.config.crt
   })
 
-  export let id: string
-
   let left = "0px"
   let bottom = "0px"
 
@@ -28,11 +26,19 @@
   })
 </script>
 
-<section {id} style="left: {left}; bottom: {bottom}; " class="absolute">
+<section
+  id="chevronmenu"
+  style="left: {left}; bottom: {bottom}; "
+  class="absolute"
+>
   <div
     class="flex flex-wrap flex-row gap-3 w-[180px] h-[100px] bg-slate-400 border border-slate-900 p-2"
   >
-    <a target="_blank" href="https://www.linkedin.com/in/flaviozanoni/">
+    <a
+      target="_blank"
+      href="https://www.linkedin.com/in/flaviozanoni/"
+      aria-label="Linkedin"
+    >
       <enhanced:img
         loading="lazy"
         class="w-5"
@@ -40,7 +46,11 @@
         alt="Linkedin"
       />
     </a>
-    <a target="_blank" href="https://github.com/FlavioZanoni">
+    <a
+      target="_blank"
+      href="https://github.com/FlavioZanoni"
+      aria-label="Github"
+    >
       <enhanced:img
         loading="lazy"
         class="w-5"

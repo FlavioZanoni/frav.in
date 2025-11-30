@@ -288,7 +288,10 @@
       </div>
     </div>
 
-    <div class="w-full bg-white" style="height: calc({height}px - 40px);">
+    <div
+      class="w-full bg-white overflow-clip"
+      style="height: calc({height}px - 40px);"
+    >
       <WindowContent
         {uuid}
         {iNode}

@@ -28,19 +28,16 @@
   let contextMenuX = 0
   let contextMenuY = 0
   let contextINode: string = null
-  const taskbarRect = document
-    .getElementById("taskbar")
-    ?.getBoundingClientRect()
-  const topBarRect = document.getElementById("top-bar")?.getBoundingClientRect()
 
   let gridColumns = 16
   let gridRows = 9
-  $: cellWidth = window.innerWidth / gridColumns
-  $: cellHeight =
-    (window.innerHeight -
-      (taskbarRect?.height || isMobile() ? 55 : 40) -
-      (topBarRect?.height || 0)) /
-    gridRows
+  let cellWidth = 0
+  let cellHeight = 0
+
+  function updateDimensions() {
+    cellHeight = (window.innerHeight - (isMobile() ? 55 + 40 : 40)) / gridRows
+    cellWidth = window.innerWidth / gridColumns
+  }
 
   // populate grid items
   let gridItems = [] as HomeGridItem[]
@@ -229,6 +226,7 @@
     e.preventDefault()
   }
 
+  let resizeObserver: ResizeObserver | null = null
   let homeGrid: HTMLElement | null = null
   onMount(() => {
     let store: OSStore | null = null
@@ -240,6 +238,12 @@
     } catch (e) {
       console.error("Error getting store from local storage", e)
     }
+
+    updateDimensions()
+    resizeObserver = new ResizeObserver(updateDimensions)
+    resizeObserver.observe(document.body)
+
+    window.addEventListener("resize", updateDimensions)
 
     if (store && store.environment) {
       osStore.set(store)
@@ -290,6 +294,8 @@
     window.removeEventListener("click", () => {
       showContextMenu = false
     })
+    window.removeEventListener("resize", updateDimensions)
+    resizeObserver?.disconnect()
   })
 </script>
 

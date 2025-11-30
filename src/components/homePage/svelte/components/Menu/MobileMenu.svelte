@@ -5,8 +5,6 @@
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
   import { onMount } from "svelte"
 
-  export let id: string
-
   let width = window.innerWidth
   let height = window.innerHeight
   let x = 0
@@ -30,7 +28,7 @@
 </script>
 
 <section
-  {id}
+  id="menu"
   class="bg-slate-200/80 dark:bg-slate-700/80 w-full h-full absolute backdrop-blur-sm text-white"
   style="left: {x}px; top: {y}px; width: {width}px; height: {height}px;"
 >

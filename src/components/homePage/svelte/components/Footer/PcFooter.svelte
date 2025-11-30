@@ -131,10 +131,10 @@
   </section>
 
   {#if showMenu}
-    <Menu id="menu" />
+    <Menu />
   {/if}
 
   {#if showChevronMenu}
-    <ChevronMenu id="chevronMenu" />
+    <ChevronMenu />
   {/if}
 </footer>

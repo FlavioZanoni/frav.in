@@ -6,8 +6,6 @@
   import { onMount } from "svelte"
   import Button from "../Button.svelte"
 
-  export let id: string
-
   let left = "0px"
   let bottom = "0px"
 
@@ -22,7 +20,7 @@
 </script>
 
 <section
-  {id}
+  id="menu"
   style="left: {left}; bottom: {bottom};"
   class="w-[400px] h-[600px] bg-slate-400 absolute p-2 pl-0 border border-slate-900 z-10"
 >
