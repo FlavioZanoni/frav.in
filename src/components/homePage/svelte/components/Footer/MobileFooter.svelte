@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { osStore } from "@lib/store"
+  import { osStore, TASK_BAR_HEIGHT_MOBILE } from "@lib/store"
   import { getItemByINode } from "@lib/utils/fileSystemUtils"
   import Button from "@svtComp/Button.svelte"
   import ChevronMenu from "@svtComp/ChevronMenu.svelte"
@@ -55,7 +55,8 @@
 
 <footer
   id="taskbar"
-  class="flex h-14 md:h-10 w-full bg-slate-400 border-t border-r border-slate-900 select-none"
+  class="flex h-14 w-full bg-slate-400 border-t border-r border-slate-900 select-none"
+  style={`height: ${TASK_BAR_HEIGHT_MOBILE}px`}
 >
   <section
     id="start"

@@ -2,8 +2,13 @@ import jsonState from "@lib/store/state.json"
 import { writable } from "svelte/store"
 import type { OSStore } from "./types"
 
-const RECYCLE_BIN_INODE = "6"
-const HOME_INODE = "2"
+export const RECYCLE_BIN_INODE = "6"
+export const HOME_INODE = "2"
+export const ROOT_INODE = "1"
+
+export const TOP_BAR_HEIGHT = 40
+export const TASK_BAR_HEIGHT = 40
+export const TASK_BAR_HEIGHT_MOBILE = 55
 
 const osStore = writable<OSStore>(jsonState as unknown as OSStore)
 osStore.subscribe((value) => {
@@ -20,4 +25,4 @@ osStore.subscribe((value) => {
   value.fileSystem.disk.apps["recycleBin"].icon = "trash.png"
 })
 
-export { RECYCLE_BIN_INODE, HOME_INODE, osStore }
+export { osStore }

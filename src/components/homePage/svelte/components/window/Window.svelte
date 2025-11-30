@@ -36,8 +36,8 @@
   }
 
   //TODO: move this to the state
-  let defaultWidth = 700
-  let defaultHeight = 550
+  let defaultWidth = 950
+  let defaultHeight = 800
   let minWidth = 450
   let minHeight = 300
   const defaultX = window.innerWidth / 2 - defaultWidth / 2

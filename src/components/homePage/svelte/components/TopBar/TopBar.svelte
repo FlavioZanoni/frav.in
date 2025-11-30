@@ -2,6 +2,7 @@
   import { onMount } from "svelte"
   import { getConnectionInfo, getSystemInfo } from "@lib/utils/systemInfoUtils"
   import type { SystemInfo } from "@lib/utils/systemInfoUtils"
+  import { TOP_BAR_HEIGHT } from "@lib/store"
 
   let clock = "00:00:00"
   let sysInfo: SystemInfo
@@ -39,7 +40,8 @@
 </script>
 
 <section
-  class="flex justify-between w-full h-10 bg-black text-white p-2 md:hidden"
+  class="flex justify-between w-full bg-black text-white p-2 md:hidden"
+  style={`height: ${TOP_BAR_HEIGHT}px`}
   id="top-bar"
 >
   <div class="flex justify-center items-center gap-2">

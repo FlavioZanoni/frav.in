@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { osStore } from "@lib/store"
+  import { osStore, ROOT_INODE } from "@lib/store"
   import { getItemByINode, isFileBlock } from "@lib/utils/fileSystemUtils"
   import type {
     DefaultItem,
@@ -12,7 +12,7 @@
   import Button from "@svtComp/Button.svelte"
   type Dir = { name: string; hasChildren: boolean; iNode: string }
 
-  export let iNode: string = "1"
+  export let iNode: string = ROOT_INODE
   export let name: string = "root"
 
   interface DefaultItemWithId extends DefaultItem {
@@ -58,7 +58,7 @@
     <FileTree
       iNode={iNodes[1]}
       dirName="root"
-      iNodeKey={"1"}
+      iNodeKey={ROOT_INODE}
       {updateCurrentDir}
       currentOpen={currentINode}
     />
