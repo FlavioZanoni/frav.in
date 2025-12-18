@@ -1,12 +1,12 @@
 import { getASCIIArt } from "@lib/utils/getASCIIArt";
 import { getNetworkInfo, getScreenInfo, getStorageInfo, getSystemInfo } from "@lib/utils/systemInfoUtils";
-import type { Terminal } from "@xterm/xterm";
+import type { Term } from "..";
 
 const getWidthNotIncludingAnsi = (str: string) => {
   return str.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, "").length
 }
 
-export const neofetch = async (term: Terminal) => {
+export const neofetch = async (term: Term) => {
   const img = getASCIIArt()
   const splitted = img.split("\n")
   let imageWidth = getWidthNotIncludingAnsi(splitted[0])
@@ -36,21 +36,22 @@ export const neofetch = async (term: Terminal) => {
 
   const loopSize = Math.max(Object.keys(info).length, splitted.length)
 
-  term.writeln("")
+  term.xterm.writeln("")
   for (let i = 0; i < loopSize; i++) {
     const currValue = Object.values(info)[i]
     const currKey = Object.keys(info)[i]
     if (i < splitted.length) {
       const imageLine = splitted[i]
       if (!currValue) {
-        term.writeln(`${imageLine}${moveCursor}`)
+        term.xterm.writeln(`${imageLine}${moveCursor}`)
         continue
       } else {
-        term.writeln(`${imageLine}${moveCursor} \x1b[38;2;95;205;228m ${currKey ? currKey + ": " : ""}\x1b[37m${Object.values(info)[i]}`);
+        term.xterm.writeln(`${imageLine}${moveCursor} \x1b[38;2;95;205;228m ${currKey ? currKey + ": " : ""}\x1b[37m${Object.values(info)[i]}`);
       }
     } else {
       if (!currKey) continue
-      term.writeln(`${moveCursor} ${currKey ? currKey + ": " : ""}${Object.values(info)[i]}`)
+      term.xterm.writeln(`${moveCursor} ${currKey ? currKey + ": " : ""}${Object.values(info)[i]}`)
     }
   }
+  term.newLine()
 }

@@ -8,6 +8,7 @@ import type {
   INode,
   INodes,
 } from "@lib/store/types"
+import type { Term } from "@lib/terminal"
 
 export function isFileBlock(
   block: FileBlock | DirectoryBlock
@@ -105,12 +106,14 @@ export const iNodeLookup = (dir: string) => {
   return iNode
 }
 
-export const touch = (name: string, pwd: string) => {
+export const touch = (term: Term, args: string[]) => {
+  const name = args[0]
+
   if (!name) {
     throw new Error("missing file operand")
   }
 
-  const dir = pwd
+  const dir = term.getPwd()
   const parent = iNodeLookup(dir)
 
   osStore.update((state) => {
@@ -149,14 +152,18 @@ export const touch = (name: string, pwd: string) => {
 
     return state
   })
+
+  term.newLine()
 }
 
-export const mkdir = (name: string, pwd: string) => {
+export const mkdir = (term: Term, args: string[]) => {
+  let name = args[0]
+
   if (!name) {
     throw new Error("missing file operand")
   }
 
-  const dir = pwd
+  const dir = term.getPwd()
   const parent = iNodeLookup(dir)
 
   osStore.update((state) => {
@@ -183,6 +190,8 @@ export const mkdir = (name: string, pwd: string) => {
 
     return state
   })
+
+  term.newLine()
 }
 
 const handleDirNavigation = (
@@ -229,31 +238,31 @@ const handleDirNavigation = (
 }
 
 export const cd = (
-  dir: string,
-  pwd: string,
-  setPwd: (newPwd: string) => void
+  term: Term, args: string[]
 ) => {
+  const dir = args[0]
+
   if (!dir) {
     throw new Error("missing directory operand")
   }
 
-  let currentPwd = pwd
+  let pwd = term.getPwd()
 
   osStore.update((state) => {
     const { iNodes } = state.fileSystem
     const splitDir = dir.split("/")
 
     splitDir.forEach((dir) => {
-      const parent = iNodeLookup(currentPwd)
+      const parent = iNodeLookup(pwd)
       let parentINode = iNodes[parent]
 
       const { newPwd: newCurrentPwd, block } = handleDirNavigation(
         dir,
         iNodes,
-        currentPwd
+        pwd
       )
-      setPwd(newCurrentPwd)
-      currentPwd = newCurrentPwd
+      term.setPwd(newCurrentPwd)
+      pwd = newCurrentPwd
 
       if (!block) return
 
@@ -265,9 +274,13 @@ export const cd = (
     })
     return state
   })
+  term.newLine()
 }
 
-export const mv = (source: string, destination: string, pwd: string) => {
+export const mv = (term: Term, args: string[]) => {
+  const source = args[0]
+  const destination = args[1]
+
   if (!source) {
     throw new Error("missing directory operand")
   }
@@ -275,7 +288,7 @@ export const mv = (source: string, destination: string, pwd: string) => {
     throw new Error("missing destination operand")
   }
 
-  let currentPwd = pwd
+  let pwd = term.getPwd()
   let fileINode: string
   let srcINode: string
   let parent: INode
@@ -288,10 +301,10 @@ export const mv = (source: string, destination: string, pwd: string) => {
         block,
         parent: currentParent,
         parentINode,
-      } = handleDirNavigation(dir, iNodes, currentPwd, true)
+      } = handleDirNavigation(dir, iNodes, pwd, true)
       if (!block) return
 
-      currentPwd = newCurrentPwd
+      pwd = newCurrentPwd
       parent = currentParent
       srcINode = parentINode
       node = block.iNode
@@ -307,15 +320,15 @@ export const mv = (source: string, destination: string, pwd: string) => {
       const { newPwd: newCurrentPwd } = handleDirNavigation(
         dir,
         iNodes,
-        currentPwd
+        pwd
       )
-      currentPwd = newCurrentPwd
+      pwd = newCurrentPwd
     })
 
     const itemName = parent.blocks.find(
       (item: DirectoryBlock) => item.iNode === node
     ).name
-    const whereToMove = iNodeLookup(currentPwd)
+    const whereToMove = iNodeLookup(pwd)
     const itemToMove: DirectoryBlock = {
       name: itemName,
       iNode: node,
@@ -327,7 +340,7 @@ export const mv = (source: string, destination: string, pwd: string) => {
     const { iNodes } = state.fileSystem
 
     fileINode = getSourceNode(iNodes)
-    currentPwd = pwd // reset the pwd to use in the dest validation
+    pwd = term.getPwd() // reset the pwd to use in the dest validation
     moveToDest(fileINode, iNodes)
     // remove from last place
     const filtered = iNodes[srcINode].blocks.filter(
@@ -337,10 +350,12 @@ export const mv = (source: string, destination: string, pwd: string) => {
 
     return state
   })
+
+  term.newLine()
 }
 
-export const ls = (pwd: string) => {
-  const currentPwd = pwd
+export const ls = (term: Term, _: string[]) => {
+  const currentPwd = term.getPwd()
   const parent = iNodeLookup(currentPwd)
   let items: string[]
 
@@ -352,5 +367,5 @@ export const ls = (pwd: string) => {
     }
   })
 
-  return items
+  term.writeln(items.join(" "))
 }
