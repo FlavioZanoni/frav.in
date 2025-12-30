@@ -3,6 +3,7 @@ import { FitAddon } from "@xterm/addon-fit"
 import type { Terminal } from "@xterm/xterm"
 import { neofetch } from "./commands/neofetch"
 import { clear, echo, help, pwd } from "./commands/defaults"
+import { isMobile } from "@lib/utils/browserUtils"
 type TerminalType = InstanceType<typeof Terminal>
 
 export const commands = new Map<string, Function>([
@@ -123,6 +124,7 @@ export class Term {
     this.xterm.options.fontFamily = "IBM"
     this.xterm.options.lineHeight = 1.4
     this.xterm.write(this.getDecorationString())
+    this.xterm.textarea.setAttribute('type', 'password');
 
     this.xterm.onBell(() => {
       this.beep()
@@ -133,6 +135,8 @@ export class Term {
       switch (data) {
         // enter
         case "\r":
+        case "\n":
+        case "\r\n":
           this.execCommand(this.currentCommand)
           this.currentCommand = ""
           break
@@ -140,7 +144,6 @@ export class Term {
         case "\x7f":
           this.handleBackspace()
           break
-
         // up arrow
         case "\x1b[A":
           this.commandListIdx++

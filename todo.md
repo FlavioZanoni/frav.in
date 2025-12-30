@@ -36,7 +36,7 @@
 - terminal:
   - [ ] implement rm command
   - [ ] pipe and redirects (maybe?)
-  - [ ] terminal history
+  - [x] terminal history
   - [ ] terminal autocomplete
   - [x] neofetch/fastfetch
 
