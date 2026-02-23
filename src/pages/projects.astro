@@ -35,15 +35,20 @@ dayjs.extend(isBefore)
       {
         projects
           .sort((a, b) => {
-            const aEnd = `${a.frontmatter.end}-01`
-            const bEnd = `${b.frontmatter.end}-01`
-            if (a.frontmatter.end === "current") {
+            const statusOrder = { "Under development": 0, "Refactor queue": 1 }
+            const aStatus = statusOrder[a.frontmatter.status] ?? 2
+            const bStatus = statusOrder[b.frontmatter.status] ?? 2
+            if (aStatus !== bStatus) return aStatus - bStatus
+
+            const aStart = `${a.frontmatter.start}-01`
+            const bStart = `${b.frontmatter.start}-01`
+            if (a.frontmatter.start === "current") {
               return -1
             }
-            if (b.frontmatter.end === "current") {
+            if (b.frontmatter.start === "current") {
               return 1
             }
-            return dayjs(aEnd).isBefore(dayjs(bEnd)) ? 1 : -1
+            return dayjs(aStart).isBefore(dayjs(bStart)) ? 1 : -1
           })
           .map((project) => {
             return <project.Content />
