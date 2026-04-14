@@ -1,6 +1,14 @@
 ---
+import type { MarkdownInstance } from "astro"
 import Layout from "../layouts/Layout.astro"
-const readme = await Astro.glob("../../README.md")
+
+interface Frontmatter {} // empty if no frontmatter
+
+const readme = Object.values(
+  import.meta.glob<MarkdownInstance<Frontmatter>>("../../README.md", {
+    eager: true,
+  })
+)
 ---
 
 <script>

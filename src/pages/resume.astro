@@ -1,9 +1,23 @@
 ---
-const workExperience = await Astro.glob("./workExperience/*.mdx")
+import type { MDXInstance } from "astro"
 import dayjs from "dayjs"
 import isBefore from "dayjs/plugin/isSameOrBefore"
 import Layout from "../layouts/Layout.astro"
 dayjs.extend(isBefore)
+
+interface Frontmatter {
+  title: string
+  company: string
+  start: string
+  end: string
+  description: string
+}
+
+const workExperience = Object.values(
+  import.meta.glob<MDXInstance<Frontmatter>>("./workExperience/*.mdx", {
+    eager: true,
+  })
+)
 
 const skills = [
   "React",

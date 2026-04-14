@@ -1,9 +1,21 @@
 ---
-const projects = await Astro.glob("./projects/*.mdx")
 import dayjs from "dayjs"
 import isBefore from "dayjs/plugin/isSameOrBefore"
 import Layout from "../layouts/Layout.astro"
+import type { MDXInstance } from "astro"
 dayjs.extend(isBefore)
+
+interface Frontmatter {
+  title?: string
+  status?: string
+  start?: string
+}
+
+const projects = Object.values(
+  import.meta.glob<MDXInstance<Frontmatter>>("./projects/*.mdx", {
+    eager: true,
+  })
+)
 ---
 
 <script>
@@ -16,9 +28,9 @@ dayjs.extend(isBefore)
     `
   }
 
-  document.querySelectorAll('a').forEach(link => {
-    link.setAttribute('target', '_blank');
-  });
+  document.querySelectorAll("a").forEach((link) => {
+    link.setAttribute("target", "_blank")
+  })
 </script>
 
 <Layout title="projects">
